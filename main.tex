@@ -1,0 +1,80 @@
+\documentclass[10pt, journal]{IEEEtran}
+
+\usepackage{url}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+\usepackage[T1]{fontenc} % optional
+\usepackage[cmintegrals]{newtxmath}
+\usepackage{bm} % optional
+
+\usepackage{glossaries}
+\makeglossaries
+\loadglsentries{glsEntries}
+
+\title{Dynamic Partial Self-Reconfiguration of Self-Aware Systems}
+\author{Constantin Schieber, 01228774}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    This work focuses on fault aspects of Self-Aware Systems.
+    This includes a review of the types of faults that are occurring, methods for their detection and how one mitigate certain faults. 
+    One could argue that \glspl{NoC} are Self-Aware too, as the nodes / controllers monitor the behavior of the throughput and can react accordingly to arising situations.
+\end{abstract}
+
+\section{Types of Faults}
+\subsection{Transient Faults}
+\begin{itemize}
+    \item \glspl{SEU}, e.g. radiation induced \cite{alkady_fault-tolerant_2014}, \cite{lee_fault-tolerant_2017}
+    \begin{itemize}
+    \item Change of logic state in memory cell
+    \item Commonly tackled by redundancy
+    \item Built-in fault detection unit possible
+    \end{itemize}
+    \item Single Bit Errors (SBEs)
+    \item Single Event Transients (SETs)
+    \item Address Decoding Faults
+\end{itemize}
+
+Faults occur either in the interconnect of the \gls{FPGA} (which uses up to 80\% of the available silicon) or in its actual logic blocks \cite{alkady_fault-tolerant_2014}, \cite{jing_huang_routability_2004}.
+\subsection{Permanent Faults}
+\begin{itemize}
+    \item Time Dependant Dielectric Breakdowns (TDDBs)
+    \item Electro Migration
+    \item Hot Carrier Effect
+\end{itemize}
+
+\section{Detection of Faults}
+\subsection{Network on Chip}
+\cite{sterpone_new_2012} introduces ways to test the fault tolerance of \gls{NoC}.
+\subsection{Monitoring AXI-Core Traffic}
+\cite{navas_towards_2015} introduces the basis of cognitive reconfigurable hardware and presents a design that maintains a desired system performance by using \gls{RTR} and self-awareness.
+Self-awareness is achieved by monitoring and evaluating critical AXI-core metrics.
+
+\subsection{Duplication with Compare}
+\cite{alkady_dynamic_2015} proposes a fault detection technique to detect open faults, Stuck-At faults and \glspl{SEU}.
+
+\section{Mitigation of Faults}
+\subsection{Network on Chip - make fault-tolerant per design}
+\cite{yesil_fpga_2016} adds additional network resources to a non-fault-tolerant design to mitigate interconnect faults.
+
+\cite{lu_fault-tolerant_2015} provides a case study on implementing a fault-tolerant routing algorithm and its monitoring mechanism.
+\subsection{Redundancy by need based replication}
+\cite{glein_self-adaptive_2014} tackles the problem of radiation by the creation of redundant modules - based on currently measured \glspl{SEU} rates in on-chip memories.
+\subsection{Dynamic Partial Self-Reconfiguration}
+\cite{alkady_dynamic_2015} goes on to propose system recovery by re-instantiating defective modules into the Partially Reconfigurable block.
+
+\cite{shanker_enhancing_nodate} proposes a similar solution in the context of \glspl{ECU}.
+
+\cite{sharma_run-time_2018} shows an approach on how to decide which configuration is currently desired in a multi-modal / multi-task \gls{SoPC}.
+\printglossaries 
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,SocSeminar}
+
+\end{document}
