@@ -24,11 +24,32 @@
 \begin{abstract}
     This work focuses on fault aspects of Self-Aware Systems.
     This includes a review of the types of faults that are occurring, methods for their detection and how one mitigate certain faults. 
-    One could argue that \glspl{NoC} are Self-Aware too, as the nodes / controllers monitor the behavior of the throughput and can react accordingly to arising situations.
+    One could argue that \glspl{NoC} are Self-Aware too, as the nodes / controllers monitor the behaviour of the throughput and can react accordingly to arising situations.
 \end{abstract}
 
-\section{Types of Faults}
-\subsection{Transient Faults}
+\section{Introduction}
+\gls{DPR} for fault mitigation can be split into two major fields of appliance. 
+The first field discusses the mitigation of so called \textit{internal} faults.
+This encompasses faults that interfere with the current functionality of the \gls{FPGA} itself, e.g. permanent faults and transient faults.
+The second area focuses on the mitigation of faults that are present in external devices by the provision of redundancy.
+
+The rest of this work is organized as follows.
+Section \ref{InternalFaults} introduces different causes of faults within the \gls{FPGA} and shows strategies to maintain the desired behaviour.
+Section \ref{ExternalFaults} describes scenarios where external faults may happen and how they can be mitigated with the usage of minimal hardware resources. 
+
+\section{\gls{DPR} for Internal Fault Mitigation}\label{InternalFaults}
+\glspl{FPGA} provide high flexibility and good performance in many areas that require a high amount of concurrent computing and therefore benefit from a dedicated hardware implementation.
+These properties prove useful for applications in the domain of aerospace and help to reduce the cost for satellites and spacecraft while providing a high flexibility. 
+But \glspl{FPGA} are especially vulnerable to cosmic radiation which can create a multitude of internal errors in the \gls{FPGA} and thereby breaking its intended functionality \cite{ito_total_2015}.
+While there are radiation hardend \glspl{FPGA} available on the market, the mass of a space embedded system is still composed of 80\% radiation shielding.
+This shielding is still not able to provide a perfect protection from radiation.
+Therefore, solutions for fault mitigation in aerospace \glspl{FPGA} need to be developed on the architectural level instead of the physical level. 
+This may also provide the advantage of lower requirements for radiation shielding and therefore a reduced cost for payload on rocket launches.
+
+\subsection{Types of Internal Faults}
+There are different types of faults that may occour in the lifetime of an FPGA, a short overview over the most relevant ones is given in the following.
+\par
+\textbf{Transient Faults}
 \begin{itemize}
     \item \glspl{SEU}, e.g. radiation induced \cite{alkady_fault-tolerant_2014}, \cite{lee_fault-tolerant_2017}
     \begin{itemize}
@@ -42,23 +63,18 @@
 \end{itemize}
 
 Faults occur either in the interconnect of the \gls{FPGA} (which uses up to 80\% of the available silicon) or in its actual logic blocks \cite{alkady_fault-tolerant_2014}, \cite{jing_huang_routability_2004}.
-\subsection{Permanent Faults}
+\par
+\textbf{Permanent Faults}
 \begin{itemize}
     \item Time Dependant Dielectric Breakdowns (TDDBs)
     \item Electro Migration
     \item Hot Carrier Effect
 \end{itemize}
-\subsection{Faults caused by aging}
+\subsection{Mitigation Strategies for Internal Faults}
 
-\section{Detection of Faults}
-\subsection{Network on Chip}
-\cite{sterpone_new_2012} introduces ways to test the fault tolerance of \gls{NoC}.
-\subsection{Monitoring AXI-Core Traffic}
-\cite{navas_towards_2015} introduces the basis of cognitive reconfigurable hardware and presents a design that maintains a desired system performance by using \gls{RTR} and self-awareness.
-Self-awareness is achieved by monitoring and evaluating critical AXI-core metrics.
-
-\subsection{Duplication with Compare}
-\cite{alkady_dynamic_2015} proposes a fault detection technique to detect open faults, Stuck-At faults and \glspl{SEU}.
+\section{\gls{DPR} for External Fault Mitigation}\label{ExternalFaults}
+\subsection{Types of External Faults}
+\subsection{Mitigation Strategies for Externall Faults}
 
 \section{Mitigation of Faults}
 \subsection{Network on Chip - make fault-tolerant per design}
