@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
+\usepackage{tikz}
 
 \usepackage[T1]{fontenc} % optional
 \usepackage[cmintegrals]{newtxmath}
@@ -29,25 +30,33 @@
 
 \section{Introduction}
 \gls{DPR} for fault mitigation can be split into two major fields of appliance. 
-The first field discusses the mitigation of so called \textit{internal} faults.
-This encompasses faults that interfere with the current functionality of the \gls{FPGA} itself, e.g. permanent faults and transient faults.
-The second area focuses on the mitigation of faults that are present in external devices by the provision of redundancy.
+The first field discusses the mitigation of faults that occur within the \gls{FPGA}.
+These faults interfere with the intended functionality of the tasks executed on the \gls{FPGA} itself, e.g. permanent and transient faults. 
+The second area focuses on the mitigation of faults that are present in external devices by the provision of redundancy in form of the \gls{FPGA}.
+This work will in the following refer to these two types of faults as \textit{internal} and \textit{external} faults respectively.
+
+\subsection{Advantages of \gls{DPR}}
 
 The rest of this work is organized as follows.
 Section \ref{InternalFaults} introduces different causes of faults within the \gls{FPGA} and shows strategies to maintain the desired behaviour.
 Section \ref{ExternalFaults} describes scenarios where external faults may happen and how they can be mitigated with the usage of minimal hardware resources. 
 
 \section{\gls{DPR} for Internal Fault Mitigation}\label{InternalFaults}
+\begin{figure}
+    \resizebox{\columnwidth}{!}{\input{graphics/internalFault.tex}}
+    \caption{Internal Fault Mitigation - functionality from a faulty tile is moved to a healthy area with \gls{DPR}}\label{fig:internalFaultMitigation}
+\end{figure}
+%\input{graphics/internalFault.tex}
 \glspl{FPGA} provide high flexibility and good performance in many areas that require a high amount of concurrent computing and therefore benefit from a dedicated hardware implementation.
 These properties prove useful for applications in the domain of aerospace and help to reduce the cost for satellites and spacecraft while providing a high flexibility. 
 But \glspl{FPGA} are especially vulnerable to cosmic radiation which can create a multitude of internal errors in the \gls{FPGA} and thereby breaking its intended functionality \cite{ito_total_2015}.
-While there are radiation hardend \glspl{FPGA} available on the market, the mass of a space embedded system is still composed of 80\% radiation shielding.
+While there are radiation hardened \glspl{FPGA} available on the market, the mass of a space embedded system is still composed of 80\% radiation shielding.
 This shielding is still not able to provide a perfect protection from radiation.
 Therefore, solutions for fault mitigation in aerospace \glspl{FPGA} need to be developed on the architectural level instead of the physical level. 
 This may also provide the advantage of lower requirements for radiation shielding and therefore a reduced cost for payload on rocket launches.
 
 \subsection{Types of Internal Faults}
-There are different types of faults that may occour in the lifetime of an FPGA, a short overview over the most relevant ones is given in the following.
+There are different types of faults that may occur in the lifetime of an \gls{FPGA}, a short overview over the most relevant ones is given in the following.
 \par
 \textbf{Transient Faults}
 \begin{itemize}
@@ -71,10 +80,34 @@ Faults occur either in the interconnect of the \gls{FPGA} (which uses up to 80\%
     \item Hot Carrier Effect
 \end{itemize}
 \subsection{Mitigation Strategies for Internal Faults}
+To mitigate the aforementioned internal faults in an \gls{FPGA}, different strategies can be employed.
+This section is going to introduce the most common concepts and how they can be combined.
+
 
 \section{\gls{DPR} for External Fault Mitigation}\label{ExternalFaults}
+Redundancy is a necessary feature to increase the dependability of a system.
+Systems that have a need for high dependability encompass e.g. any safety critical system where a fault can result in the harm or even loss of human live.
+Systems where maintenance may be difficult or expensive are another set of examples where redundancy is useful.
+Redundancy can be achieved through the provision of multiple hardware entities that perform the same task.
+If one hardware entity fails, another can take over and supply the expected functionality.
+This can get expensive when there are multiple smaller hardware entities that perform specific computational work. 
+To reduce space usage and cost, a general purpose \gls{CPU} can be used.
+This \gls{CPU} can then emulate the functionality of the faulty hardware and thereby mitigates the fault. 
+But this approach introduces new margin for error, as a two-pronged development may lead to discrepancies.
+Another issue are real-time requirements that need to be fulfilled.
+A regular \gls{CPU} may not be able to provide concurrent computations or the required performance, as the emulated hardware (or software) may be too complex.
+
+A solution to these problems is the usage of \glspl{FPGA} as a means of redundancy. 
+As the \gls{FPGA} can be reconfigured with different functionality during runtime, it reduces the total amount of hardware that is needed to achieve redundancy.
+Unlike \glspl{CPU}, \glspl{FPGA} provide better means for concurrent computation and are suitable to emulate multiple faulty hardware entities in a more appropriate manner. %TODO: Citation needed
+
+\begin{figure}
+    \resizebox{\columnwidth}{!}{\input{graphics/externalFault.tex}}
+    \caption{External Fault Mitigation - functionality from a faulty \gls{ECU} is provided by a module (instantiated with \gls{DPR}) within the \gls{FPGA}}\label{fig:externalFaultMitigation}
+\end{figure}
+
 \subsection{Types of External Faults}
-\subsection{Mitigation Strategies for Externall Faults}
+\subsection{Mitigation Strategies for External Faults}
 
 \section{Mitigation of Faults}
 \subsection{Network on Chip - make fault-tolerant per design}
