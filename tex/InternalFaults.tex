@@ -1,0 +1,57 @@
+\section{\gls{DPR} for Internal Fault Mitigation}\label{InternalFaults}
+\begin{figure}
+    \resizebox{\columnwidth}{!}{\input{graphics/internalFault.tex}}
+    \caption{Internal Fault Mitigation - functionality from a faulty tile is moved to a healthy area with \gls{DPR}}\label{fig:internalFaultMitigation}
+\end{figure}
+%\input{graphics/internalFault.tex}
+\glspl{FPGA} provide high flexibility and good performance in many areas that require a high amount of concurrent computing and therefore benefit from a dedicated hardware implementation.
+These properties prove useful for applications in the domain of aerospace and help to reduce the cost for satellites and spacecraft while providing high flexibility throughout the development process. 
+
+But \glspl{FPGA} are especially vulnerable to cosmic radiation which can create a multitude of internal errors in the \gls{FPGA} and thereby breaking its intended functionality \cite{ito_total_2015}.
+While there are radiation hardened \glspl{FPGA} available on the market, the mass of a space embedded system is still composed of 80\% radiation shielding \cite{ito_total_2015}.
+Yet, this shielding is still not able to provide sufficient protection from radiation induced errors, especially on long term missions. 
+Therefore, solutions for fault mitigation in aerospace \glspl{FPGA} need to be developed on the architectural level instead of the physical level. 
+This may also provide the advantage of lower requirements for radiation shielding and therefore a reduced cost for payload on rocket launches.
+
+The next section reviews the different types of faults and categorizes them. 
+
+\subsection{Types of Internal Faults}
+There are different types of faults that may occur in the lifetime of an \gls{FPGA}, a short overview over the most relevant ones is given in the following.
+\par
+\textbf{Transient Faults}
+\begin{itemize}
+    \item \glspl{SEU}, e.g. radiation induced \cite{alkady_fault-tolerant_2014}, \cite{lee_fault-tolerant_2017}
+    \begin{itemize}
+    \item Change of logic state in memory cell
+    \item Commonly tackled by redundancy
+    \item Built-in fault detection unit possible
+    \end{itemize}
+    \item Single Bit Errors (SBEs)
+    \item Single Event Transients (SETs)
+    \item Address Decoding Faults
+\end{itemize}
+
+Faults occur either in the interconnect of the \gls{FPGA} (which uses up to 80\% of the available silicon) or in its actual logic blocks \cite{alkady_fault-tolerant_2014}, \cite{jing_huang_routability_2004}.
+\par
+\textbf{Permanent Faults}
+\begin{itemize}
+    \item Time Dependant Dielectric Breakdowns (TDDBs)
+    \item Electro Migration
+    \item Hot Carrier Effect
+\end{itemize}
+
+Based on this review, two main categories of errors emerge.
+Firstly, \textit{permanent faults} (also known as \textit{hard errors}), which include all faults that render the affected area completely unusable. 
+Secondly, \textit{transient faults} (also known as \textit{soft errors}), which encompasses faults where a reclamation of the erroneous area may still be possible after the initial mitigation process.
+
+\gls{DPR} allows for recovery from both categories. Different recovery strategies are introduced in the next section. 
+
+\subsection{Mitigation Strategies for Internal Faults}\label{MitigationOfInternalFaults}
+To mitigate the aforementioned internal faults in an \gls{FPGA}, different strategies can be employed.
+All of them feature \gls{DPR} as a means to move functional blocks from a faulty silicon area to a healthy one.
+What sets them apart is the way of fault detection and the specifically employed \gls{DPR} strategy.
+
+This section is going to introduce the most common concepts and how they are applied. 
+
+The work in \cite{sharma_run-time_2018} proposes not only ways for fault recovery, but also ways of maintaining as much functionality as possible under varying power constraints. 
+\gls{DPR} is utilized to achieve \gls{RT-SA}, i.e. a system that can dynamically alter its architecture to mitigate the effect of changed circumstances.

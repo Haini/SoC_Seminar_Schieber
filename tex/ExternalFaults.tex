@@ -1,0 +1,24 @@
+\section{\gls{DPR} for External Fault Mitigation}\label{ExternalFaults}
+Redundancy is a necessary feature to increase the dependability of a system.
+Systems that have a need for high dependability encompass e.g. any safety critical system where a fault can result in the harm or even loss of human live.
+Systems where maintenance may be difficult or expensive are another set of examples where redundancy is useful.
+Redundancy can be achieved through the provision of multiple hardware entities that perform the same task.
+If one hardware entity fails, another can take over and supply the expected functionality.
+This can get expensive when there are multiple smaller hardware entities that perform specific computational work. 
+To reduce space usage and cost, a general purpose \gls{CPU} can be used.
+This \gls{CPU} can then emulate the functionality of the faulty hardware and thereby mitigates the fault. 
+But this approach introduces new margin for error, as a two-pronged development may lead to discrepancies.
+Another issue are real-time requirements that need to be fulfilled.
+A regular \gls{CPU} may not be able to provide concurrent computations or the required performance, as the emulated hardware (or software) may be too complex.
+
+A solution to these problems is the usage of \glspl{FPGA} as a means of redundancy. 
+As the \gls{FPGA} can be reconfigured with different functionality during runtime, it reduces the total amount of hardware that is needed to achieve redundancy.
+Unlike \glspl{CPU}, \glspl{FPGA} provide better means for concurrent computation and are suitable to emulate multiple faulty hardware entities in a more appropriate manner. %TODO: Citation needed
+
+\begin{figure}
+    \resizebox{\columnwidth}{!}{\input{graphics/externalFault.tex}}
+    \caption{External Fault Mitigation - functionality from a faulty \gls{ECU} is provided by a module (instantiated with \gls{DPR}) within the \gls{FPGA}}\label{fig:externalFaultMitigation}
+\end{figure}
+
+\subsection{Types of External Faults}
+\subsection{Mitigation Strategies for External Faults}
