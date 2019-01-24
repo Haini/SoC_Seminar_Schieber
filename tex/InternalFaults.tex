@@ -48,8 +48,27 @@ Secondly, \textit{transient faults} (also known as \textit{soft errors}), which 
 
 \gls{DPR} allows for recovery from both categories.
 
-The following sections introduce the general concept of a fault mitigation- and recovery flow and concrete implementations. 
+The following sections introduce the general concept of a fault mitigation- and recovery flow as well as concrete implementations. 
+
 \subsection{Abstract Fault Mitigation Flow}\label{AbstractFaultMitigationFlow}
+As the general scheme for fault mitigation is always the same, a brief introduction to the corner stones of every recovery flow is given (depicted in figure \ref{fig:internalFaultFlow}). 
+
+\subsubsection{Detect Fault}
+    One key aspect of fault mitigation is fault detection. 
+    When faulty behaviour is detected, the origin of the fault needs to be determined.
+    Generally, a dedicated (internal or external) control-unit is assigned to the task of result verification.
+    This control-unit then gathers information about the location of the affected area and which functionality is corrupted.
+\subsubsection{Mitigate Fault}
+    After a successful isolation of the fault, steps towards its mitigation are taken.
+    Due to external (e.g. increase in radiation) or internal (e.g. space, power)constraints, this stage may encompass some sort of estimation algorithm for the selection of a suitable \gls{PR} block.
+    As a consequence, the system can dynamically adapt its fault resistance to changing circumstances.
+\subsubsection{Resume Functionality}
+    To fully leverage the advantage of \gls{DPR}, some sort of redundancy (e.g. \gls{TMR}) is usually employed.
+    This allows the whole system to remain fully functional during the process of \gls{DPR} - the redundant modules will still provide the required data / processing during the reconfiguration. 
+    The now freshly instantiated module then needs to re-sync its state with the rest of the system to return to its normal functionality.
+\subsubsection{Recover Faulty Area}
+    If a transient fault is responsible for the erroneous behaviour, the affected chip area may be recovered by error correction techniques like scrubbing \cite{reorda_error-detection_2017}. 
+    In case of a successful recovery, the control-unit can mark the partition as healthy and reuse it at a later point in time.
 
 \begin{center}
 \begin{figure}[h]
