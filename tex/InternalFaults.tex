@@ -1,8 +1,10 @@
 \section{\gls{DPR} for Internal Fault Mitigation}\label{InternalFaults}
 \begin{figure}
-    \resizebox{\columnwidth}{!}{\input{graphics/internalFault.tex}}
+    \centering
+    \resizebox{\smallColumnWidth}{!}{\input{graphics/internalFault.tex}}
     \caption{Internal Fault Mitigation - functionality from a faulty tile is moved to a healthy area with \gls{DPR}}\label{fig:internalFaultMitigation}
 \end{figure}
+
 %\input{graphics/internalFault.tex}
 \glspl{FPGA} provide high flexibility and good performance in many areas that require a high amount of concurrent computing and therefore benefit from a dedicated hardware implementation.
 These properties prove useful for applications in the domain of aerospace and help to reduce the cost for satellites and spacecraft while providing high flexibility throughout the development process. 
@@ -44,9 +46,25 @@ Based on this review, two main categories of errors emerge.
 Firstly, \textit{permanent faults} (also known as \textit{hard errors}), which include all faults that render the affected area completely unusable. 
 Secondly, \textit{transient faults} (also known as \textit{soft errors}), which encompasses faults where a reclamation of the erroneous area may still be possible after the initial mitigation process.
 
-\gls{DPR} allows for recovery from both categories. Different recovery strategies are introduced in the next section. 
+\gls{DPR} allows for recovery from both categories.
+
+The following sections introduce the general concept of a fault mitigation- and recovery flow and concrete implementations. 
+\subsection{Abstract Fault Mitigation Flow}\label{AbstractFaultMitigationFlow}
+
+\begin{center}
+\begin{figure}[h]
+    \centering
+    \resizebox{\smallColumnWidth}{!} {
+        \input{graphics/internalFaultFlow.tex}
+    }
+\caption{Abstract Fault Mitigation Flow}
+\label{fig:internalFaultFlow}
+\end{figure}
+\end{center}
+
 
 \subsection{Mitigation Strategies for Internal Faults}\label{MitigationOfInternalFaults}
+
 To mitigate the aforementioned internal faults in an \gls{FPGA}, different strategies can be employed.
 All of them feature \gls{DPR} as a means to move functional blocks from a faulty silicon area to a healthy one.
 What sets them apart is the way of fault detection and the specifically employed \gls{DPR} strategy.

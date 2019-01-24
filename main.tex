@@ -9,7 +9,9 @@
 \usepackage{xcolor}
 \usepackage{tikz}
 \usepackage[section]{placeins}
-
+\usepackage[justification=centering]{caption}
+\usepackage{calc}
+\usepackage[nomessages]{fp}
 
 \usepackage[T1]{fontenc} % optional
 \usepackage[cmintegrals]{newtxmath}
@@ -18,6 +20,12 @@
 \usepackage{glossaries}
 \makeglossaries
 \loadglsentries{glsEntries}
+
+%\usetikzlibrary{external}
+%\tikzexternalize % activate!
+
+\newlength{\smallColumnWidth}
+\setlength{\smallColumnWidth}{\columnwidth-2cm}%
 
 \title{Dynamic Partial Self-Reconfiguration of Self-Aware Systems}
 \author{Constantin Schieber, 01228774}
