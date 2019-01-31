@@ -1,7 +1,8 @@
 \section{\gls{DPR} for Internal Fault Mitigation}\label{InternalFaults}
 \begin{figure}
     \centering
-    \resizebox{\smallColumnWidth}{!}{\input{graphics/internalFault.tex}}
+    \includegraphics[width=\columnwidth]{graphics/faultyTile2.pdf}
+    %\resizebox{\smallColumnWidth}{!}{\input{graphics/internalFault.tex}}
     \caption{Internal Fault Mitigation - functionality from a faulty tile is moved to a healthy area with \gls{DPR}}\label{fig:internalFaultMitigation}
 \end{figure}
 
@@ -46,9 +47,11 @@ Based on this review, two main categories of errors emerge.
 Firstly, \textit{permanent faults} (also known as \textit{hard errors}), which include all faults that render the affected area completely unusable. 
 Secondly, \textit{transient faults} (also known as \textit{soft errors}), which encompasses faults where a reclamation of the erroneous area may still be possible after the initial mitigation process.
 
-\gls{DPR} allows for recovery from both categories.
+To mitigate the aforementioned internal faults in an \gls{FPGA}, different strategies can be employed.
+All of them feature \gls{DPR} as a means to move functional blocks from a faulty silicon area to a healthy one.
+What sets them apart is the way of fault detection and the specifically employed \gls{DPR} strategy.
 
-The following sections introduce the general concept of a fault mitigation- and recovery flow as well as concrete implementations. 
+The following section introduces the general concept of a fault mitigation- and recovery flow. 
 
 \subsection{Abstract Fault Mitigation Flow}\label{AbstractFaultMitigationFlow}
 As the general scheme for fault mitigation is always the same, a brief introduction to the corner stones of every recovery flow is given (depicted in figure \ref{fig:internalFaultFlow}). 
@@ -60,7 +63,7 @@ As the general scheme for fault mitigation is always the same, a brief introduct
     This control-unit then gathers information about the location of the affected area and which functionality is corrupted.
 \subsubsection{Mitigate Fault}
     After a successful isolation of the fault, steps towards its mitigation are taken.
-    Due to external (e.g. increase in radiation) or internal (e.g. space, power)constraints, this stage may encompass some sort of estimation algorithm for the selection of a suitable \gls{PR} block.
+    Due to external (e.g. increase in radiation) or internal (e.g. space, power) constraints, this stage may encompass some sort of estimation algorithm for the selection of a suitable \gls{PR} block.
     As a consequence, the system can dynamically adapt its fault resistance to changing circumstances.
 \subsubsection{Resume Functionality}
     To fully leverage the advantage of \gls{DPR}, some sort of redundancy (e.g. \gls{TMR}) is usually employed.
@@ -81,14 +84,66 @@ As the general scheme for fault mitigation is always the same, a brief introduct
 \end{figure}
 \end{center}
 
+Each stage of this flow can be implemented with different architectural design choices.
+These choices are influenced by available resources, real-time constraints and the desire of more control over the system behaviour.
+The next sections introduce different architectures for a system that wants to utilize \gls{DPR} for fault mitigation.
 
-\subsection{Mitigation Strategies for Internal Faults}\label{MitigationOfInternalFaults}
+\subsection{Spare Tile Architecture for \gls{DPR}}
+This approach is taken in the work of \cite{lameres_radsat_nodate} and is extended in \cite{wilson_hybrid_2017}.
+It creates a computer system that exhibits a higher fault tolerance against radiation induced faults while using only commercially available off-the-shelf \glspl{FPGA}. 
+To achieve this, the computing system is designed as a \gls{PR} partition from the beginning (figure \ref{fig:SpareTileArchitecture}). 
+\gls{TMR} with a voter is used to assess the correctness of the output. 
+When one module fails to compute the expected result (i.e. the result of the other two modules), a partial reconfiguration flow is triggered.
+One of the healthy spare tiles is selected for the instantiation of another compute module.
+The usage of the scrubbing technique allows the eventual recovery of the faulty tile which decreases the likelihood of resource exhaustion. 
+Scrubbing is also used to check the health of inactive tiles in intervals, so that the healthiness of the backup tiles is known at all time. 
+An advantage of this approach is that all relevant computations can still be carried out by the two remaining healthy modules during the recovery process. 
+It also increases the robustness of the system in comparison to a stand-alone \gls{TMR} + scrubbing approach.
+The system has been verified theoretically by a Markov model, as well as in a real world scenario where the test system was exposed to a defined dose of radiation over a time-period (The \gls{MTBF} was increased by a factor of 90 in this test).
 
-To mitigate the aforementioned internal faults in an \gls{FPGA}, different strategies can be employed.
-All of them feature \gls{DPR} as a means to move functional blocks from a faulty silicon area to a healthy one.
-What sets them apart is the way of fault detection and the specifically employed \gls{DPR} strategy.
+A system like this is easy to implement and creates a low resource overhead during the development phase while it provides drastically improved reliability.
+The verification of the results in the voter and the selection of a healthy healthy spare tile for reconfiguration don't pose a significant computational load on the system.
+As instantiation of a spare module is way faster than scrubbing a faulty tile (1ms vs 100ms), the chance of losing 2 active compute tiles in a short time frame is reduced. 
+But as the complexity of such a design increases, the tile size also increases. 
+This implies an increased overall area cost for the spare tiles on the \gls{FPGA} which makes efficient placement more difficult.
+It also reduces the amount of available space for other desired functionalities. 
 
-This section is going to introduce the most common concepts and how they are applied. 
+The work of \cite{martins_tmr_2015} follows a similar principle, but tries to optimize the tooling that is required for partial bitstream generation.
+The goal of these optimizations is to reduce the overall resource waste by the provision of only one partial bitstream per module for all \textit{N} \glspl{RP}. %The following part could still be extended with more details 
+Usual \gls{DPR} workflows require a dedicated partial bitstream for each \gls{RP}, which results in \textit{N} partial bitstreams for \textit{N} desired \gls{RP}.
+\cite{martins_dynamic_2018} improves the previous work in \cite{martins_tmr_2015} and demonstrates its functionality in a scenario where permanent faults due to ageing are detected and mitigated.
+
+\begin{center}
+\begin{figure}[h]
+    \centering
+    \resizebox{\smallColumnWidth}{!} {
+        \input{graphics/spareTileArch.tex}
+    }
+\caption{Spare Tile Architecture}
+\label{fig:SpareTileArchitecture}
+\end{figure}
+\end{center}
+
+\subsection{Task Based Architecture for \gls{DPR}}
+If a more complex or diverse set of tasks needs to be processed, a task based architecture may be used. 
+This usually includes the usage of some kind of \gls{RTOS} with a scheduler.
+The scheduler is extended with a placer component which computes the optimal location of a hardware accelerated task in the \gls{RP}.
+To make a heterogeneous set of tasks possible, all tasks can share the same memory interface and interact with the \gls{RTOS} over a memory map, as shown in \cite{wang_dynamic_2018} (see also figure \ref{fig:TaskBased}).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{graphics/TaskBased.pdf}
+    %\resizebox{\smallColumnWidth}{!}{\input{graphics/internalFault.tex}}
+    \caption{Task Based Architecture with a memory map for a unified communication interface}\label{fig:TaskBased}
+\end{figure}
 
 The work in \cite{sharma_run-time_2018} proposes not only ways for fault recovery, but also ways of maintaining as much functionality as possible under varying power constraints. 
 \gls{DPR} is utilized to achieve \gls{RT-SA}, i.e. a system that can dynamically alter its architecture to mitigate the effect of changed circumstances.
+
+\cite{wang_dynamic_2018}
+
+\section{\gls{DPR} in \glspl{NoC}}
+Introduced by \cite{wehbe_secure_2016}.
+\subsection{\gls{DPR} for increased security}
+\subsection{\gls{DPR} for failed routers}
+

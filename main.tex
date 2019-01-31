@@ -18,6 +18,13 @@
 \usepackage{bm} % optional
 
 \usepackage{glossaries}
+
+\makeatletter
+\def\@hex@@Hex#1%
+ {\if a#1A\else \if b#1B\else \if c#1C\else \if d#1D\else
+  \if e#1E\else \if f#1F\else #1\fi\fi\fi\fi\fi\fi \@hex@Hex}
+\makeatother
+
 \makeglossaries
 \loadglsentries{glsEntries}
 
@@ -26,6 +33,16 @@
 
 \newlength{\smallColumnWidth}
 \setlength{\smallColumnWidth}{\columnwidth-2cm}%
+
+
+\definecolor{cCyan}{HTML}{8dd3c7}
+\definecolor{cYellow}{HTML}{ffffb3}
+\definecolor{cFlieder}{HTML}{bebada}
+\definecolor{cRed}{HTML}{fb8072}
+\definecolor{cBlue}{HTML}{80b1d3}
+\definecolor{cOrange}{HTML}{fdb462}
+\definecolor{cGreen}{HTML}{b3de69}
+\definecolor{cPink}{HTML}{fccde5}
 
 \title{Dynamic Partial Self-Reconfiguration of Self-Aware Systems}
 \author{Constantin Schieber, 01228774}
