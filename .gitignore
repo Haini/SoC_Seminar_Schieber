@@ -2,6 +2,7 @@ vscode/*
 .vscode/*
 *.code-workspace
 *.pdf
+!./graphics/*.pdf
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

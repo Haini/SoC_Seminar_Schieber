@@ -15,6 +15,10 @@ While there are radiation hardened \glspl{FPGA} available on the market, the mas
 Yet, this shielding is still not able to provide sufficient protection from radiation induced errors, especially on long term missions. 
 Therefore, solutions for fault mitigation in aerospace \glspl{FPGA} need to be developed on the architectural level instead of the physical level. 
 This may also provide the advantage of lower requirements for radiation shielding and therefore a reduced cost for payload on rocket launches.
+Figure \ref{fig:internalFaultMitigation} depicts the basic concept of internal fault mitigation. 
+An error occurs in Task 1 (\textit{T1}) and a healthy Spare Tile (\textit{S1}) is available. 
+\textit{T1} is then moved to \textit{S1} in a partial-reconfiguration step and is ready for regular operation after the reconfiguration time \textit{t+1}.
+A recovery of the tile Recovery 1 (\textit{R1}) is attempted and if it fails, it is marked as faulty for future reconfiguration operations.
 
 The next section reviews the different types of faults and categorizes them. 
 
