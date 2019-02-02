@@ -76,7 +76,6 @@ As the general scheme for fault mitigation is always the same, a brief introduct
 \subsubsection{Recover Faulty Area}
     If a transient fault is responsible for the erroneous behaviour, the affected chip area may be recovered by error correction techniques like scrubbing \cite{reorda_error-detection_2017}. 
     In case of a successful recovery, the control-unit can mark the partition as healthy and reuse it at a later point in time.
-
 \begin{center}
 \begin{figure}[h]
     \centering
@@ -87,7 +86,6 @@ As the general scheme for fault mitigation is always the same, a brief introduct
 \label{fig:internalFaultFlow}
 \end{figure}
 \end{center}
-
 Each stage of this flow can be implemented with different architectural design choices.
 These choices are influenced by available resources, real-time constraints and the desire of more control over the system behaviour.
 The next sections introduce different architectures for a system that wants to utilize \gls{DPR} for fault mitigation.
@@ -114,37 +112,72 @@ It also reduces the amount of available space for other desired functionalities.
 
 The work of \cite{martins_tmr_2015} follows a similar principle, but tries to optimize the tooling that is required for partial bitstream generation.
 The goal of these optimizations is to reduce the overall resource waste by the provision of only one partial bitstream per module for all \textit{N} \glspl{RP}. %The following part could still be extended with more details 
-Usual \gls{DPR} workflows require a dedicated partial bitstream for each \gls{RP}, which results in \textit{N} partial bitstreams for \textit{N} desired \gls{RP}.
+Usual \gls{DPR} workflows require a dedicated partial bitstream for each \gls{RP}, which results in \textit{N} partial bitstreams for \textit{N} desired \glspl{RP}.
 \cite{martins_dynamic_2018} improves the previous work in \cite{martins_tmr_2015} and demonstrates its functionality in a scenario where permanent faults due to ageing are detected and mitigated.
-
 \begin{center}
 \begin{figure}[h]
     \centering
-    \resizebox{\smallColumnWidth}{!} {
+    \resizebox{\columnwidth}{!} {
         \input{graphics/spareTileArch.tex}
     }
 \caption{Spare Tile Architecture}
 \label{fig:SpareTileArchitecture}
 \end{figure}
 \end{center}
-
-\subsection{Task Based Architecture for \gls{DPR}}
+\subsection{Task Based Architecture for \gls{DPR} by Wang et al.}
 If a more complex or diverse set of tasks needs to be processed, a task based architecture may be used. 
 This usually includes the usage of some kind of \gls{RTOS} with a scheduler.
 The scheduler is extended with a placer component which computes the optimal location of a hardware accelerated task in the \gls{RP}.
-To make a heterogeneous set of tasks possible, all tasks can share the same memory interface and interact with the \gls{RTOS} over a memory map, as shown in \cite{wang_dynamic_2018} (see also figure \ref{fig:TaskBased}).
-
+To make a heterogeneous set of tasks possible, all tasks can share the same memory interface and interact with the \gls{RTOS} over this shared memory, as shown in \cite{wang_dynamic_2018} (see also figure \ref{fig:TaskBased}).
+\cite{wang_dynamic_2018} implements their work on the Zynq \gls{SoC} by Xilinx, which means that the following concepts may be specific to this platform and vendor. 
+To achieve the placement of a partial bitstream (the task) to any location within the \gls{RP}, the used \gls{ICAP} controller needs to support the modification of the \gls{FAR}, which is part of the structure of each bitstream.
+The \gls{FAR} determines the physical location of the module on the \gls{FPGA}.
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{graphics/TaskBased.pdf}
     %\resizebox{\smallColumnWidth}{!}{\input{graphics/internalFault.tex}}
     \caption{Task Based Architecture with a memory map for a unified communication interface}\label{fig:TaskBased}
 \end{figure}
+The placement module is responsible for the determination of a suitable location for a scheduled hardware task based on the \textit{MER-3D Contact algorithm}. 
+To achieve this, the \gls{RP} is split into squares of equal size as the smallest possible granularity of logic that may be available to a task.
+Hardware tasks contain information about their required width ($T_w$) and height ($T_h$) in relation to the created grid. 
+They also contain information about their task arrival time ($T_a$), execution time ($T_e$) and deadline ($T_d$).
+Equation \ref{equ:HardwareTask} shows a compact representation of such a hardware task while figure \ref{fig:TaskGrid} shows the subdivided \gls{RP} where the two tasks \textit{T1} and \textit{T2} are already placed and executed.
+\begin{equation}\label{equ:HardwareTask}
+    HT(T_w, T_h, T_a, T_e, T_d)
+\end{equation}
+\begin{figure}
+    \centering
+    %\includegraphics[width=\columnwidth]{}
+    \scalebox{0.5}{
+    \resizebox{\smallColumnWidth}{!}{\input{graphics/taskGrid.tex}}
+    }
+    \caption{The \gls{RP} is split into a grid to allow the mapping of tasks based on their resource usage}\label{fig:TaskGrid}
+\end{figure}
+\subsubsection{Fault prevention scheme}
+To mitigate transient and permanent faults, that occur in the \gls{RP} of the \gls{FPGA}, the description of the hardware task is extended with the status of the resource.
+If a fault is detected within a square of logic, a new damaged task \textit{D1} is created and bound to the faulty tile (Figure \ref{fig:TaskGridFault}).
+It gets the highest priority and the longest possible execution time assigned to prevent other tasks from being placed into the faulty area.
+Due to this, the placement algorithm does not need to be modified in any way, as the faulty tile is just treated as a busy task that is reschedule as soon as it expires.
+An extension to this would be a new constraint that requires other tasks to be placed as far away from the damaged resource as possible. 
+\begin{figure}
+    \centering
+    %\includegraphics[width=\columnwidth]{}
+    \scalebox{0.5}{
+    \resizebox{\smallColumnWidth}{!}{\input{graphics/taskGridFault.tex}}
+    }
+    \caption{Damaged task D1 blocks the hardware placer from using the faulty tiles for other tasks}\label{fig:TaskGridFault}
+\end{figure}
+ 
+\subsection{Task Based Architecture for \gls{DPR} by Sharma et al.}
+The work in \cite{sharma_run-time_2018} proposes a similar architecture to \cite{wang_dynamic_2018} but puts a bigger focus on making adaptions to changes in the available power budget.
+That means that \gls{DPR} is utilized to achieve \gls{RT-SA}, i.e. a system that can dynamically alter its architecture to mitigate the effects of changed circumstances.
+To achieve this goal, different implementations of the same algorithm need to be provided.
+These implementations can differ in the used hardware resources (e.g. area, specific components, routing) to accommodate for different situations.
+But as the amount of different implementations increases, it is getting more difficult to choose the optimal combination of modules for a certain setting.
+A bigger solution space is especially problematic on a system that already operates on constrained resources, as storage (for a pre-computed look-up table) as well as computational power (for a live exploration) are constrained. 
 
-The work in \cite{sharma_run-time_2018} proposes not only ways for fault recovery, but also ways of maintaining as much functionality as possible under varying power constraints. 
-\gls{DPR} is utilized to achieve \gls{RT-SA}, i.e. a system that can dynamically alter its architecture to mitigate the effect of changed circumstances.
 
-\cite{wang_dynamic_2018}
 
 \section{\gls{DPR} in \glspl{NoC}}
 Introduced by \cite{wehbe_secure_2016}.

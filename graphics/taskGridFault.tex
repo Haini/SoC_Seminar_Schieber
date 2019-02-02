@@ -1,0 +1,29 @@
+\newcommand*{\xMin}{0}%
+\newcommand*{\xMax}{3}%
+\newcommand*{\yMin}{0}%
+\newcommand*{\yMax}{3}%
+\newcommand*{\gridScale}{4}
+\begin{tikzpicture}
+        %\foreach \i in {\xMin,...,\xMax} {
+    %    \draw [black] (\i / \gridScale,\yMin / \gridScale) -- (\i / \gridScale,\yMax/ \gridScale);
+    %}
+    %\foreach \i in {\yMin,...,\yMax} {
+    %    \draw [black] (\xMin / \gridScale,\i / \gridScale) -- (\xMax / \gridScale,\i / \gridScale);
+    %}
+
+%\draw [step=0.3,blue, very thick] (0.5,0.5) grid (2,2);
+
+\begin{scope}[
+    yshift=0,every node/.append style={
+        yslant=0,xslant=0},yslant=0,xslant=0
+      ]
+    %\fill[white,fill opacity=0.6] (0,0) rectangle (5,5);
+    \draw[step=10mm, black] (0,0) grid (5,5);
+    %\draw[step=2mm, green] (2,2) grid (3,3);
+    \fill[cGreen!50, text=black] (0,5) rectangle(2,2) node[pos=0.5] {T1};
+    \fill[cRed!50, text=black] (2,5) rectangle(3,3) node[pos=0.5] {D1};
+    \fill[cBlue!50, text=black] (3,2) rectangle(5,0) node[pos=0.5] {T2};
+    \draw[black,very thick] (0,0) rectangle (5,5);
+\end{scope}
+
+\end{tikzpicture}
