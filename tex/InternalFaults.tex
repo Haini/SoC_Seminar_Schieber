@@ -124,7 +124,7 @@ Usual \gls{DPR} workflows require a dedicated partial bitstream for each \gls{RP
 \label{fig:SpareTileArchitecture}
 \end{figure}
 \end{center}
-\subsection{Task Based Architecture for \gls{DPR} by Wang et al.}
+\subsection{Task Based Architecture for \gls{DPR} by Wang et al.}\label{TaskBasedArchitectureWang}
 If a more complex or diverse set of tasks needs to be processed, a task based architecture may be used. 
 This usually includes the usage of some kind of \gls{RTOS} with a scheduler.
 The scheduler is extended with a placer component which computes the optimal location of a hardware accelerated task in the \gls{RP}.
@@ -154,7 +154,7 @@ Equation \ref{equ:HardwareTask} shows a compact representation of such a hardwar
     }
     \caption{The \gls{RP} is split into a grid to allow the mapping of tasks based on their resource usage}\label{fig:TaskGrid}
 \end{figure}
-\subsubsection{Fault prevention scheme}
+\subsubsection{Fault mitigation scheme}
 To mitigate transient and permanent faults, that occur in the \gls{RP} of the \gls{FPGA}, the description of the hardware task is extended with the status of the resource.
 If a fault is detected within a square of logic, a new damaged task \textit{D1} is created and bound to the faulty tile (Figure \ref{fig:TaskGridFault}).
 It gets the highest priority and the longest possible execution time assigned to prevent other tasks from being placed into the faulty area.
@@ -169,18 +169,48 @@ An extension to this would be a new constraint that requires other tasks to be p
     \caption{Damaged task D1 blocks the hardware placer from using the faulty tiles for other tasks}\label{fig:TaskGridFault}
 \end{figure}
  
-\subsection{Task Based Architecture for \gls{DPR} by Sharma et al.}
+\subsection{Task Based Architecture for \gls{DPR} by Sharma et al.}\label{TaskBasedArchitectureSharma}
 The work in \cite{sharma_run-time_2018} proposes a similar architecture to \cite{wang_dynamic_2018} but puts a bigger focus on making adaptions to changes in the available power budget.
 That means that \gls{DPR} is utilized to achieve \gls{RT-SA}, i.e. a system that can dynamically alter its architecture to mitigate the effects of changed circumstances.
 To achieve this goal, different implementations of the same algorithm need to be provided.
 These implementations can differ in the used hardware resources (e.g. area, specific components, routing) to accommodate for different situations.
 But as the amount of different implementations increases, it is getting more difficult to choose the optimal combination of modules for a certain setting.
 A bigger solution space is especially problematic on a system that already operates on constrained resources, as storage (for a pre-computed look-up table) as well as computational power (for a live exploration) are constrained. 
-
-
-
+Therefore, the so called \textit{Explorer} flow is proposed.
+This flow allows the selection of a suitable combination of task modules based on the current requirements.
+\subsubsection{Fault mitigation scheme}
+The \textit{Explorer} also implements a fault mitigation flow.
+When a fault is detected in a \gls{RP}, a reconfiguration to another \gls{RP} is attempted as a first step.
+If no spare \glspl{RP} are available (i.e. all resources are in usage), it may still be possible to reduce another tasks resource consumption while it stills keeps up the required functionality and meets its deadline.
+For this purpose, the task with the lowest priority is examined.
+If there is a configuration that fulfils the necessary requirements, the task is reconfigured to this degraded form and the faulty task is moved to the now free spare slot.
+Should the lowest priority task already be reduced to its most economical form (in regards to consumed area), the process is repeated with the next higher priority task. 
+When the list of possible tasks is exhausted, i.e. the task with the highest priority is reached and no sufficient area could be claimed, another solution needs to be found. 
+In this case, the list of of tasks is traversed again from the bottom up. 
+This time, each task is checked for a protection flag, the \gls{EC}. 
+If this flag is set to 0, the task is eliminated and the faulty task is instantiated in the created spare space.
+After a successful mitigation the faulty area is checked for transient and permanent faults. 
+In the case of a transient fault, the original configuration is restored after the the faulty tile is recovered. 
+For permanent faults, the new configuration is kept and the faulty tile is removed from future evaluation processes. 
+ 
+%\begin{figure}
+%    \centering
+%    %\includegraphics[width=\columnwidth]{}
+%    \scalebox{0.8}{
+%    \resizebox{\smallColumnWidth}{!}{\input{graphics/faultFlowSharma.tex}}
+%    }
+%    \caption{Flow chart for fault mitigation with limited resources}\label{fig:FaultFlowSharma}
+%\end{figure}
 \section{\gls{DPR} in \glspl{NoC}}
-Introduced by \cite{wehbe_secure_2016}.
+\glspl{NoC} in \glspl{FPGA} are another example for fault mitigation on the architectural level. 
+\glspl{NoC} in general are already designed with fault tolerance in mind, e.g. re-routing packages over different paths to avoid congestion or re-configuration of task mappings to re-balance the network as described in the literature review by \cite{kadri_survey_2019}.
+\glspl{NoC} can be seen from two sides in the context of \gls{DPR}. 
+Firstly, it can be used as a communication network inside a \gls{RP} (\cite{majer_packet_2005}) and thereby is one way to enable a flexible and heterogeneous task mapping architecture as described in section \ref{TaskBasedArchitectureWang}. 
+Secondly, it can be used to link different \glspl{IP} cores together, thereby providing an efficient communication architecture in an otherwise static network.
+\cite{wehbe_secure_2016}  introduces a way of not only using \gls{DPR} for the mitigation of transient and permanent faults, but also in the context of security related risks in \glspl{NoC}.
+
+
 \subsection{\gls{DPR} for increased security}
+
 \subsection{\gls{DPR} for failed routers}
 
