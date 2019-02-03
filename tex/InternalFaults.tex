@@ -208,9 +208,31 @@ For permanent faults, the new configuration is kept and the faulty tile is remov
 Firstly, it can be used as a communication network inside a \gls{RP} (\cite{majer_packet_2005}) and thereby is one way to enable a flexible and heterogeneous task mapping architecture as described in section \ref{TaskBasedArchitectureWang}. 
 Secondly, it can be used to link different \glspl{IP} cores together, thereby providing an efficient communication architecture in an otherwise static network.
 \cite{wehbe_secure_2016}  introduces a way of not only using \gls{DPR} for the mitigation of transient and permanent faults, but also in the context of security related risks in \glspl{NoC}.
+The next two sections will explore these two threat scenarios and present how mitigation can be handled with \gls{DPR}. 
 
+\subsection{Increased security for \gls{DPR}}
+The \gls{NoC} in \cite{wehbe_secure_2016} introduces a security concept that is adapted from the base of public key cryptography. 
+They argue that design-time methods alone are not enough to ensure the integrity of all \glspl{IP} that are eligible for \gls{DPR}.
+If such a malicious \gls{IP} is instantiated and joins the \gls{NoC} it is able to exploit classic network vulnerabilities (e.g. \gls{DoS} attacks, eavesdropping on traffic, provide malicious data, ...).
+Even if a router verifies the authenticity of the node and blocks all future communication from this node, it may still be able to exploit unforeseen security breaches.  
 
-\subsection{\gls{DPR} for increased security}
+This is, where the public key cryptography comes into play. 
+For all \glspl{IP} that are trusted, a public-private key-pair is computed at design time. 
+When a node instantiates an \gls{IP} with \gls{DPR}, its authenticity is verified by a security module within the nearest router. 
+If that verification fails, the security module triggers a reconfiguration flow that removes all links that connect the malicious \gls{IP} to the rest of the \gls{NoC}.
+This reduces the attack vector on the router and thereby assists the prevention of intentionally produced faults. 
 
 \subsection{\gls{DPR} for failed routers}
-
+\glspl{NoC} are also susceptible to transient and permanent faults. 
+They are already resilient by design, but especially nodes at the edge of the network (i.e. those that don't have the maximum amount of neighbours) can be cut off from the rest of the network entirely when a fault occurs in the area of their corresponding routers. 
+\cite{wehbe_secure_2016} proposes to use \gls{DPR} to change the topology of the network to reconnect the lost node $N_1$ to a healthy router.
+For this, a close router $R_1$ is selected. 
+The number of network interfaces on each router is constant, so another node $N_x$ needs to be unlinked from router $R_1$. 
+This node $N_x$ still needs to be connected to another router $R_n$ after being disconnected from $R_1$, i.e. it needs to remain in the network after the reconfiguration.
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{graphics/nocSwap.pdf}
+    %\scalebox{0.8}{
+    %}
+    \caption{Simplified process of link reconfiguration, the \gls{RP} is used for switching up the routing.}\label{fig:nocSwap}
+\end{figure}
