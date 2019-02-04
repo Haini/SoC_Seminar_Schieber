@@ -27,13 +27,13 @@
   \if e#1E\else \if f#1F\else #1\fi\fi\fi\fi\fi\fi \@hex@Hex}
 \makeatother
 
-\makeatletter
-\AtBeginDocument{%
-  \expandafter\renewcommand\expandafter\subsection\expandafter{%
-    \expandafter\@fb@secFB\subsection
-  }%
-}
-\makeatother
+%\makeatletter
+%\AtBeginDocument{%
+%  \expandafter\renewcommand\expandafter\subsection\expandafter{%
+%    \expandafter\@fb@secFB\subsection
+%  }%
+%}
+%\makeatother
 
 \makeglossaries
 \loadglsentries{glsEntries}
@@ -55,14 +55,29 @@
 \definecolor{cPink}{HTML}{fccde5}
 
 \title{Dynamic Partial Self-Reconfiguration of Self-Aware Systems}
-\author{Constantin Schieber, 01228774}
+%\author{Constantin Schieber, 01228774}
+
+\author{\IEEEauthorblockN{Constantin Schieber, 01228774}
+\IEEEauthorblockA{\\Vienna University of Technology\\
+Institute of Computer Technology\\
+Vienna, Austria\\
+Constantin.Schieber@tuwien.ac.at}
+}
 \begin{document}
 \maketitle
 
 \begin{abstract}
-    This work focuses on fault aspects of Self-Aware Systems.
-    This includes a review of the types of faults that are occurring, methods for their detection and how one mitigate certain faults. 
-    One could argue that \glspl{NoC} are Self-Aware too, as the nodes / controllers monitor the behaviour of the throughput and can react accordingly to arising situations.
+    A system can be described as fault-tolerant if it can continue at the same level of performance event though one or more components have failed. 
+    This property is inherently important for systems that operate without any chance of maintenance.
+    \glspl{FPGA} provide the opportunity of \gls{DPR}, which provides them with the ability to efficiently react to faults that are introduced through environmental (e.g. radiation, heat) or internal (e.g. a malicious \gls{IP}) changes.
+    Through the structural adaptions that are possible with \gls{DPR}, faulty chip areas can be avoided and a graceful degradation of performance with high granularity in reply to power constraints is possible.
+    It also enables efficiency through selective instantiation of needed functionality.
+    This work focuses on fault mitigation aspects of such systems. 
+    This includes a review of the types of faults that occur, methods for their detection and how one mitigate certain faults. 
+    We show that there is a wide variety of research on this topic that is especially mature in the aeronautics and space sector.
+    Particularly the mitigation of faults within \glspl{FPGA} is widely researched.
+    We also find that \gls{DPR} is rarely used to replace the functionality of external modules although this approach seems to provide a good base for economical redundancy solutions.
+    \gls{DPR} in general enables a fault mitigation solution on the architectural level that enables the usage of commercial off-the-shelf hardware for uses under extreme conditions.
 \end{abstract}
 
 \input{./tex/Introduction.tex}

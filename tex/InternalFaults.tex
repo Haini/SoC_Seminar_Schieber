@@ -229,10 +229,15 @@ They are already resilient by design, but especially nodes at the edge of the ne
 For this, a close router $R_1$ is selected. 
 The number of network interfaces on each router is constant, so another node $N_x$ needs to be unlinked from router $R_1$. 
 This node $N_x$ still needs to be connected to another router $R_n$ after being disconnected from $R_1$, i.e. it needs to remain in the network after the reconfiguration.
+
+Figure \ref{fig:nocSwap} shows a simplified version of the approach taken in \cite{wang_dynamic_2018}. 
+Multiple nodes are connected to their respective routers over a \gls{RP}.
+It is assumed that \textit{Node 2} is connected to at least two routers, one of which is \textit{Router 2}.
+\textit{Node 1} is a corner node that has only a link to one router, namely \textit{Router 1}.
+When \textit{Router 1} fails to operate, a reconfiguration process in the \gls{RP} is triggered to reconnect \textit{Node 1} to the rest of the network.
+As \textit{Node 2} still has a healthy connection to a second router, it is disconnected from \textit{Router 2} and the free link interface is used for \textit{Node 1}.
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{graphics/nocSwap.pdf}
-    %\scalebox{0.8}{
-    %}
     \caption{Simplified process of link reconfiguration, the \gls{RP} is used for switching up the routing.}\label{fig:nocSwap}
 \end{figure}
