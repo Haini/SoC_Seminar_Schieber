@@ -12,7 +12,7 @@ These properties prove useful for applications in the domain of aerospace and he
 
 But \glspl{FPGA} are especially vulnerable to cosmic radiation which can create a multitude of internal errors in the \gls{FPGA} and thereby breaking its intended functionality \cite{ito_total_2015}.
 While there are radiation hardened \glspl{FPGA} available on the market, the mass of a space embedded system is still composed of 80\% radiation shielding \cite{ito_total_2015}.
-Yet, this shielding is still not able to provide sufficient protection from radiation induced errors, especially on long term missions. 
+Yet, this shielding is still not able to provide sufficient protection from radiation induced errors, especially on long-term missions. 
 Therefore, solutions for fault mitigation in aerospace \glspl{FPGA} need to be developed on the architectural level instead of the physical level. 
 This may also provide the advantage of lower requirements for radiation shielding and therefore a reduced cost for payload on rocket launches.
 Figure \ref{fig:internalFaultMitigation} depicts the basic concept of internal fault mitigation. 
@@ -104,7 +104,7 @@ It also increases the robustness of the system in comparison to a stand-alone \g
 The system has been verified theoretically by a Markov model, as well as in a real world scenario where the test system was exposed to a defined dose of radiation over a time-period (The \gls{MTBF} was increased by a factor of 90 in this test).
 
 A system like this is easy to implement and creates a low resource overhead during the development phase while it provides drastically improved reliability.
-The verification of the results in the voter and the selection of a healthy healthy spare tile for reconfiguration don't pose a significant computational load on the system.
+The verification of the results in the voter and the selection of a healthy spare tile for reconfiguration don't pose a significant computational load on the system.
 As instantiation of a spare module is way faster than scrubbing a faulty tile (1ms vs 100ms), the chance of losing 2 active compute tiles in a short time frame is reduced. 
 But as the complexity of such a design increases, the tile size also increases. 
 This implies an increased overall area cost for the spare tiles on the \gls{FPGA} which makes efficient placement more difficult.
@@ -157,7 +157,7 @@ Equation \ref{equ:HardwareTask} shows a compact representation of such a hardwar
 To mitigate transient and permanent faults, that occur in the \gls{RP} of the \gls{FPGA}, the description of the hardware task is extended with the status of the resource.
 If a fault is detected within a square of logic, a new damaged task \textit{D1} is created and bound to the faulty tile (Figure \ref{fig:TaskGridFault}).
 It gets the highest priority and the longest possible execution time assigned to prevent other tasks from being placed into the faulty area.
-Due to this, the placement algorithm does not need to be modified in any way, as the faulty tile is just treated as a busy task that is reschedule as soon as it expires.
+Due to this, the placement algorithm does not need to be modified in any way, as the faulty tile is just treated as a busy task that is rescheduled as soon as it expires.
 An extension to this would be a new constraint that requires other tasks to be placed as far away from the damaged resource as possible. 
 \begin{figure}
     \centering
@@ -183,14 +183,14 @@ When a fault is detected in a \gls{RP}, a reconfiguration to another \gls{RP} is
 If no spare \glspl{RP} are available (i.e. all resources are in usage), it may still be possible to reduce another tasks resource consumption while it stills keeps up the required functionality and meets its deadline.
 For this purpose, the task with the lowest priority is examined.
 If there is a configuration that fulfils the necessary requirements, the task is reconfigured to this degraded form and the faulty task is moved to the now free spare slot.
-Should the lowest priority task already be reduced to its most economical form (in regards to consumed area), the process is repeated with the next higher priority task. 
+Should the lowest priority task already be reduced to its most economical form (in regard to consumed area), the process is repeated with the next higher priority task. 
 When the list of possible tasks is exhausted, i.e. the task with the highest priority is reached and no sufficient area could be claimed, another solution needs to be found. 
-In this case, the list of of tasks is traversed again from the bottom up. 
+In this case, the list of tasks is traversed again from the bottom up. 
 This time, each task is checked for a protection flag, the \gls{EC}. 
 If this flag is set to 0, the task is eliminated and the faulty task is instantiated in the created spare space.
 After a successful mitigation the faulty area is checked for transient and permanent faults. 
-In the case of a transient fault, the original configuration is restored after the the faulty tile is recovered. 
-For permanent faults, the new configuration is kept and the faulty tile is removed from future evaluation processes. 
+In the case of a transient fault, the original configuration is restored after the faulty tile is recovered. 
+For permanent faults, the new configuration is kept, and the faulty tile is removed from future evaluation processes. 
  
 %\begin{figure}
 %    \centering
@@ -202,7 +202,7 @@ For permanent faults, the new configuration is kept and the faulty tile is remov
 %\end{figure}
 \section{\gls{DPR} in \glspl{NoC}}\label{sec:NoC}
 \glspl{NoC} in \glspl{FPGA} are another example for fault mitigation on the architectural level. 
-\glspl{NoC} in general are already designed with fault tolerance in mind, e.g. re-routing packages over different paths to avoid congestion or re-configuration of task mappings to re-balance the network as described in the literature review by \cite{kadri_survey_2019}.
+\glspl{NoC}, in general, are already designed with fault tolerance in mind, e.g. re-routing packages over different paths to avoid congestion or re-configuration of task mappings to re-balance the network as described in the literature review by \cite{kadri_survey_2019}.
 \glspl{NoC} can be seen from two sides in the context of \gls{DPR}. 
 Firstly, it can be used as a communication network inside a \gls{RP} (\cite{majer_packet_2005}) and thereby is one way to enable a flexible and heterogeneous task mapping architecture as described in section \ref{sec:TaskBasedArchitectureWang}. 
 Secondly, it can be used to link different \glspl{IP} cores together, thereby providing an efficient communication architecture in an otherwise static network.
@@ -212,7 +212,7 @@ The next two sections will explore these two threat scenarios and present how mi
 \subsection{Increased security for \gls{DPR}}\label{sec:IncreasedSecurityNoC}
 The \gls{NoC} in \cite{wehbe_secure_2016} introduces a security concept that is adapted from the base of public key cryptography. 
 They argue that design-time methods alone are not enough to ensure the integrity of all \glspl{IP} that are eligible for \gls{DPR}.
-If such a malicious \gls{IP} is instantiated and joins the \gls{NoC} it is able to exploit classic network vulnerabilities (e.g. \gls{DoS} attacks, eavesdropping on traffic, provide malicious data, ...).
+If such a malicious \gls{IP} is instantiated and joins the \gls{NoC}, it is able to exploit classic network vulnerabilities (e.g. \gls{DoS} attacks, eavesdropping on traffic, provide malicious data, ...).
 Even if a router verifies the authenticity of the node and blocks all future communication from this node, it may still be able to exploit unforeseen security breaches.  
 
 This is, where the public key cryptography comes into play. 
