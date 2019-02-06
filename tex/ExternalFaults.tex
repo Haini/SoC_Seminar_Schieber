@@ -15,12 +15,12 @@ A solution to these problems is the usage of \glspl{FPGA} as a means of redundan
 As the \gls{FPGA} can be reconfigured with different functionality during runtime, it reduces the total amount of hardware that is needed to achieve redundancy.
 Unlike \glspl{CPU}, \glspl{FPGA} provide better means for concurrent computation and are suitable to emulate multiple faulty hardware entities in a more appropriate manner. %TODO: Citation needed
 
-Surprisingly, this approach is not very common in current literature, although the idea is explored by \cite{crdl_fail-safe_nodate} in the year 2002 in the context of \glspl{ECU} for the automotive industry.
+Surprisingly, this approach is not very common in current literature, although the idea is explored by \cite{crdl_fail-safe_2002} in the year 2002 in the context of \glspl{ECU} for the automotive industry.
 
-The next section will describe the proposed concept by \cite{crdl_fail-safe_nodate} in more detail.
+The next section will describe the proposed concept by \cite{crdl_fail-safe_2002} in more detail.
 
 \subsection{\gls{DPR} for automotive applications}
-A fail-safe circuit that is instantiated with \gls{DPR} is presented by \cite{crdl_fail-safe_nodate}. 
+A fail-safe circuit that is instantiated with \gls{DPR} is presented by \cite{crdl_fail-safe_2002}. 
 This circuit is meant to compensate the real-time functionality of a faulty \gls{ECU} and thereby provides redundancy.
 This approach follows the goal of the reduction of hardware costs and the reduction of power and space needs, especially when it is extended to provide multiple backup circuits for different \glspl{ECU}.
 One important assumption that is made is that a graceful degradation of performance and functionality is permitted to a certain extent, as long as it does not interfere with the minimal requirements of a safe functionality (e.g. reduction of vehicle speed due to limited processing power).
@@ -45,7 +45,7 @@ Memory for the partial bitstreams is cheaper and easier available also, which ai
     \caption{External Fault Mitigation - functionality from a faulty \gls{ECU} is provided by a module (instantiated with \gls{DPR}) within the \gls{FPGA}}\label{fig:externalFaultMitigation}
 \end{figure}
 \subsection{Possible obstacles}
-The work of \cite{shanker_enhancing_nodate} identifies some obstacles that prevent \gls{DPR} in combination with \glspl{FPGA} for redundancy from a wider adaption through the industry and research.  
+The work of \cite{shanker_enhancing_2016} identifies some obstacles that prevent \gls{DPR} in combination with \glspl{FPGA} for redundancy from a wider adaption through the industry and research.  
 
 \begin{itemize}
 \item \glspl{FPGA} are still expensive in comparison to \glspl{ECU}.
