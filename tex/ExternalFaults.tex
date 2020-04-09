@@ -26,7 +26,7 @@ This approach follows the goal of the reduction of hardware costs and the reduct
 One important assumption that is made is that a graceful degradation of performance and functionality is permitted to a certain extent, as long as it does not interfere with the minimal requirements of a safe functionality (e.g. reduction of vehicle speed due to limited processing power).
 This is a notable distinction to a fault-tolerant design, which is usually able to mitigate a fault and is still able to fulfil most of its intended functionality.
 
-To achieve redundancy, the \gls{FPGA} is connected to the same bus as the \glspl{ECU} that are monitored (see also figure \ref{fig:externalFaultMitigation}).
+To achieve redundancy, the \gls{FPGA} is connected to the same bus as the \glspl{ECU} that are monitored (see also Figure \ref{fig:externalFaultMitigation}).
 For each \gls{ECU} a \gls{RP} in the \gls{FPGA} is reserved and hosts a watchdog that monitors the status of the \gls{ECU}.
 Through this approach, each \gls{ECU} can be handled individually, and a higher resilience against a single point of failure in the monitoring logic is achieved, i.e. the malfunction of one watchdog does not affect the functionality of the others.
 This is also done to save area on the \gls{FPGA} due to limited resources.

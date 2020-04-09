@@ -57,18 +57,19 @@
 \title{Dynamic Partial Self-Reconfiguration of \\Self-Aware Systems for Fault Tolerance}
 %\author{Constantin Schieber, 01228774}
 
-\author{\IEEEauthorblockN{Constantin Schieber, 01228774}
-\IEEEauthorblockA{\\Vienna University of Technology\\
-Institute of Computer Technology\\
-Vienna, Austria\\
+\author{\IEEEauthorblockN{Constantin Schieber}
+\IEEEauthorblockA{%\\Vienna University of Technology\\
+\\Institute of Computer Technology\\
+TU Wien, Vienna, Austria\\
 Constantin.Schieber@tuwien.ac.at}
+\thanks{This paper was prepared under the supervision of Dr. Nima TaheriNejad.}
 }
 \begin{document}
 \maketitle
 
 \begin{abstract}
-    A system can be described as fault-tolerant if it can continue at the same level of performance event though one or more components have failed. 
-.    This property is inherently important for systems that operate without any chance of maintenance.
+    A system can be described as fault-tolerant if it can continue at the same level of performance even though one or more components have failed. 
+    This property is inherently important for systems that operate without any chance of maintenance.
     \glspl{FPGA} provide the opportunity of \gls{DPR}, which provides them with the ability to efficiently react to faults that are introduced through environmental (e.g. radiation, heat) or internal (e.g. a malicious \gls{IP}) changes.
     Through the structural adaptions that are possible with \gls{DPR}, faulty chip areas can be avoided and a graceful degradation of performance with high granularity in reply to power constraints is possible.
     It also enables efficiency through selective instantiation of needed functionality.
@@ -79,6 +80,24 @@ Constantin.Schieber@tuwien.ac.at}
     Particularly the mitigation of faults within \glspl{FPGA} is widely researched.
     We also find that \gls{DPR} is rarely used to replace the functionality of external modules although this approach seems to provide a good base for economical redundancy solutions.
     \gls{DPR}, in general, enables a fault mitigation solution on the architectural level that enables the usage of commercial off-the-shelf hardware for uses under extreme conditions.
+    
+    % === Improved Version === %
+    %We describe a system as fault-tolerant if it can continue at the same level of performance even though one or more components have failed.
+    %This property is inherently important for systems that operate without any chance of maintenance.
+    %Environmental (e.g. radiation, heat) or internal (e.g. a malicious \gls{IP}) changes are common causes for faults in hardware.
+    %On \glspl{FPGA} we have the opportunity to use \gls{DPR}, which provides us with the ability to efficiently react to these faults.
+    %The system can avoid faulty chip areas on the \gls{FPGA} with the help of \gls{DPR} by making structural adaptions.
+    %This allows the system to gracefully degrade performance with a high granularity. 
+    %It can consider and respect constraints like computing speed, power consumption and area usage during the degradation process.
+    %It also increases efficiency through selective instantiation of needed functionality.
+    
+    %This work focuses on fault mitigation aspects of such systems. 
+    %It includes reviews of the types of faults that occur, methods for their detection and how a system can mitigate certain faults. 
+    %We show that there is a wide variety of research on this topic that is especially mature in the aeronautics and space sector.
+    %Particularly the mitigation of faults within \glspl{FPGA} is widely researched.
+    
+    %We also find that \gls{DPR} is rarely used to replace the functionality of external modules although this approach seems to provide a good base for economical redundancy solutions.
+    %\gls{DPR}, in general, enables a fault mitigation solution on the architectural level that enables the usage of commercial off-the-shelf hardware for uses under extreme conditions.
 \end{abstract}
 
 \input{./tex/Introduction.tex}

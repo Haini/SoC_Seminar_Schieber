@@ -1,14 +1,29 @@
 \section{Conclusion}\label{Conclusion}
 This paper surveys and identifies the most common concepts that utilize \gls{DPR} in \glspl{FPGA} for fault mitigation.
-Common reasons for faults in \glspl{FPGA} are identified and classified into transient faults that allow a full recovery and permanent faults which render the affected area useless. 
+Common reasons for faults in \glspl{FPGA} are identified and classified into transient faults that allow full recovery and permanent faults that render the affected area useless. 
 We show that these faults allow for mitigation on the architectural level.
 The topic is widely researched and many concepts extend architectures that already exist by a fault mitigation feature.
 \gls{TMR} is enhanced by the possibility to move faulty modules to healthy spare tiles which greatly increases the lifetime and reliability of the \gls{TMR} architecture.  
 Hardware-based task-schedulers already use \gls{DPR} and faults in the \gls{RP} can therefore be handled by an extension of the placement algorithm.
 This algorithm can then avoid the faulty area in future placement calculations.
 \gls{DPR} enables graceful performance degradation of healthy modules to free up area for a module that resides in a faulty area when no other spare space is available anymore. 
-\glspl{NoC} profit from an improved security, as malicious nodes can be disconnected from the network on the routing level through \gls{DPR}.
+\glspl{NoC} profit from improved security, as malicious nodes can be disconnected from the network on the routing level through \gls{DPR}.
 Corner nodes in \glspl{NoC} that are isolated due to a router failure can be reintegrated into the network by the reconfiguration of link mappings on a healthy router. 
 Research in regard to external fault mitigation is still scarce but will gain more traction with the continuous improvement of \glspl{FPGA}, development tools and the creation of standards.
 Overall, the usage of \gls{DPR} for fault mitigation is already recognized as a potential solution for many reliability problems but lacks a broader adaption in commercial projects outside the aerospace sector.
 Commercial adaption will increase when standardized hardware schedulers and \glspl{NoC} gain popularity as they can easily provide fault mitigation features by design without any extra development effort by the users.
+
+% === Improved Version ===
+% In this paper, we survey and identify the most common concepts that utilize \gls{DPR} in \glspl{FPGA} for fault mitigation.
+% We identify common reasons for faults in \glspl{FPGA} and classify them into transient faults that allow full recovery and permanent faults that render the affected area useless.
+% We show that these faults allow for mitigation on the architectural level.
+% The topic is widely researched and many concepts extend architectures that already exist by a fault mitigation feature.
+% Different works enhance \gls{TMR} by the possibility to move faulty modules to healthy spare tiles which greatly increases the lifetime and reliability of the \gls{TMR} architecture.
+% Hardware-based task-schedulers already use \gls{DPR} and one can therefore handle faults in the \gls{RP} by extending the placement algorithm.
+% This algorithm can then avoid the faulty area in future placement calculations.
+% \gls{DPR} enables graceful performance degradation of healthy modules to free up area for a module that resides in a faulty area when no other spare space is available anymore.
+% \glspl{NoC} profit from improved security by disconnecting malicious nodes from the network on the routing level through \gls{DPR}.
+% Corner nodes in \glspl{NoC} that are isolated due to a router failure can be reintegrated into the network by the reconfiguration of link mappings on a healthy router.
+% Research in regard to external fault mitigation is still scarce but will gain more traction with the continuous improvement of \glspl{FPGA}, development tools and the creation of standards.
+% Overall, the usage of \gls{DPR} for fault mitigation is already recognized as a potential solution for many reliability problems but lacks a broader adaption in commercial projects outside the aerospace sector.
+% Commercial adaption will increase when standardized hardware schedulers and \glspl{NoC} gain popularity as they can easily provide fault mitigation features by design without any extra development effort by the users.

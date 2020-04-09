@@ -11,23 +11,23 @@
 These properties prove useful for applications in the domain of aerospace and help to reduce the cost for satellites and spacecraft while providing high flexibility throughout the development process. 
 
 But \glspl{FPGA} are especially vulnerable to cosmic radiation which can create a multitude of internal errors in the \gls{FPGA} and thereby breaking its intended functionality \cite{ito_total_2015}.
-While there are radiation hardened \glspl{FPGA} available on the market, the mass of a space embedded system is still composed of 80\% radiation shielding \cite{ito_total_2015}.
-Yet, this shielding is still not able to provide sufficient protection from radiation induced errors, especially on long-term missions. 
+While there are radiation-hardened \glspl{FPGA} available on the market, the mass of a space embedded system is still composed of 80\% radiation shielding \cite{ito_total_2015}.
+Yet, this shielding is still not able to provide sufficient protection from radiation-induced errors, especially on long-term missions. 
 Therefore, solutions for fault mitigation in aerospace \glspl{FPGA} need to be developed on the architectural level instead of the physical level. 
 This may also provide the advantage of lower requirements for radiation shielding and therefore a reduced cost for payload on rocket launches.
 Figure \ref{fig:internalFaultMitigation} depicts the basic concept of internal fault mitigation. 
 An error occurs in Task 1 (\textit{T1}) and a healthy Spare Tile (\textit{S1}) is available. 
 \textit{T1} is then moved to \textit{S1} in a partial-reconfiguration step and is ready for regular operation after the reconfiguration time \textit{t+1}.
-A recovery of the tile Recovery 1 (\textit{R1}) is attempted and if it fails, it is marked as faulty for future reconfiguration operations.
+Recovery of the tile Recovery 1 (\textit{R1}) is attempted and if it fails, it is marked as faulty for future reconfiguration operations.
 
-The next section reviews the different types of faults and categorizes them. 
+The next subsection reviews the different types of faults and categorizes them. 
 
 \subsection{Types of Internal Faults}
-There are different types of faults that may occur in the lifetime of an \gls{FPGA}, a short overview over the most relevant ones is given in the following.
+There are different types of faults that may occur in the lifetime of a \gls{FPGA}, a short overview of the most relevant ones is given in the following.
 \par
 \textbf{Transient Faults}
 \begin{itemize}
-    \item \glspl{SEU}, e.g. radiation induced \cite{alkady_fault-tolerant_2014}, \cite{lee_fault-tolerant_2017}
+    \item \glspl{SEU}, e.g. radiation-induced \cite{alkady_fault-tolerant_2014}, \cite{lee_fault-tolerant_2017}
     \begin{itemize}
     \item Change of the logic state in a memory cell
     \item Commonly tackled by redundancy
@@ -43,22 +43,22 @@ Faults occur either in the interconnect of the \gls{FPGA} (which uses up to 80\%
 \textbf{Permanent Faults}
 \begin{itemize}
     \item Time Dependant Dielectric Breakdowns (TDDBs)
-    \item Electro Migration
+    \item Electron Migration
     \item Hot Carrier Effect
 \end{itemize}
 
 Based on this review, two main categories of errors emerge.
-Firstly, \textit{permanent faults} (also known as \textit{hard errors}), which include all faults that render the affected area completely unusable. 
-Secondly, \textit{transient faults} (also known as \textit{soft errors}), which encompasses faults where a reclamation of the erroneous area may still be possible after the initial mitigation process.
+First, \textit{permanent faults} (also known as \textit{hard errors}), which include all faults that render the affected area completely unusable. 
+Second, \textit{transient faults} (also known as \textit{soft errors}), which encompasses faults where the reclamation of the erroneous area may still be possible after the initial mitigation process.
 
-To mitigate the aforementioned internal faults in an \gls{FPGA}, different strategies can be employed.
+To mitigate the aforementioned internal faults in a \gls{FPGA}, different strategies can be employed.
 All of them feature \gls{DPR} as a means to move functional blocks from a faulty silicon area to a healthy one.
 What sets them apart is the way of fault detection and the specifically employed \gls{DPR} strategy.
 
 The following section introduces the general concept of a fault mitigation- and recovery flow. 
 
 \subsection{Abstract Fault Mitigation Flow}\label{AbstractFaultMitigationFlow}
-As the general scheme for fault mitigation is always the same, a brief introduction to the corner stones of every recovery flow is given (depicted in figure \ref{fig:internalFaultFlow}). 
+As the general scheme for fault mitigation is always the same, a brief introduction to the cornerstones of every recovery flow is given (depicted in Figure \ref{fig:internalFaultFlow}). 
 
 \subsubsection{Detect Fault}
     One key aspect of fault mitigation is fault detection. 
@@ -66,7 +66,7 @@ As the general scheme for fault mitigation is always the same, a brief introduct
     Generally, a dedicated (internal or external) control-unit is assigned to the task of result verification.
     This control-unit then gathers information about the location of the affected area and which functionality is corrupted.
 \subsubsection{Mitigate Fault}
-    After a successful isolation of the fault, steps towards its mitigation are taken.
+    After successful isolation of the fault, steps towards its mitigation are taken.
     Due to external (e.g. increase in radiation) or internal (e.g. space, power) constraints, this stage may encompass some sort of estimation algorithm for the selection of a suitable \gls{PR} block.
     As a consequence, the system can dynamically adapt its fault resistance to changing circumstances.
 \subsubsection{Resume Functionality}
@@ -92,25 +92,25 @@ The next sections introduce different architectures for a system that wants to u
 
 \subsection{Spare Tile Architecture for \gls{DPR}}\label{sec:SpareTileArchitecture}
 This approach is taken in the work of \cite{lameres_radsat_2015} and is extended in \cite{wilson_hybrid_2017}.
-It creates a computer system that exhibits a higher fault tolerance against radiation induced faults while using only commercially available off-the-shelf \glspl{FPGA}. 
-To achieve this, the computing system is designed as a \gls{PR} partition from the beginning (figure \ref{fig:SpareTileArchitecture}). 
+It creates a computer system that exhibits a higher fault tolerance against radiation-induced faults while using only commercially available off-the-shelf \glspl{FPGA}. 
+To achieve this, the computing system is designed as a \gls{PR} partition from the beginning (Figure \ref{fig:SpareTileArchitecture}). 
 \gls{TMR} with a voter is used to assess the correctness of the output. 
 When one module fails to compute the expected result (i.e. the result of the other two modules), a partial reconfiguration flow is triggered.
 One of the healthy spare tiles is selected for the instantiation of another compute module.
 The usage of the scrubbing technique allows the eventual recovery of the faulty tile which decreases the likelihood of resource exhaustion. 
-Scrubbing is also used to check the health of inactive tiles in intervals, so that the healthiness of the backup tiles is known at all time. 
+Scrubbing is also used to check the health of inactive tiles in intervals so that the healthiness of the backup tiles is known at all time. 
 An advantage of this approach is that all relevant computations can still be carried out by the two remaining healthy modules during the recovery process. 
 It also increases the robustness of the system in comparison to a stand-alone \gls{TMR} + scrubbing approach.
-The system has been verified theoretically by a Markov model, as well as in a real world scenario where the test system was exposed to a defined dose of radiation over a time-period (The \gls{MTBF} was increased by a factor of 90 in this test).
+The system has been verified theoretically by a Markov model, as well as in a real-world scenario where the test system was exposed to a defined dose of radiation over a time-period (The \gls{MTBF} was increased by a factor of 90 in this test).
 
 A system like this is easy to implement and creates a low resource overhead during the development phase while it provides drastically improved reliability.
-The verification of the results in the voter and the selection of a healthy spare tile for reconfiguration don't pose a significant computational load on the system.
-As instantiation of a spare module is way faster than scrubbing a faulty tile (1ms vs 100ms), the chance of losing 2 active compute tiles in a short time frame is reduced. 
+The verification of the results in the voter and the selection of a healthy spare tile for reconfiguration doesn't pose a significant computational load on the system.
+As the instantiation of a spare module is way faster than scrubbing a faulty tile (1ms vs 100ms), the chance of losing 2 active compute tiles in a short time frame is reduced. 
 But as the complexity of such a design increases, the tile size also increases. 
 This implies an increased overall area cost for the spare tiles on the \gls{FPGA} which makes efficient placement more difficult.
 It also reduces the amount of available space for other desired functionalities. 
 
-The work of \cite{martins_tmr_2015} follows a similar principle, but tries to optimize the tooling that is required for partial bitstream generation.
+The work of \cite{martins_tmr_2015} follows a similar principle but tries to optimize the tooling that is required for partial bitstream generation.
 The goal of these optimizations is to reduce the overall resource waste by the provision of only one partial bitstream per module for all \textit{N} \glspl{RP}. %The following part could still be extended with more details 
 Usual \gls{DPR} workflows require a dedicated partial bitstream for each \gls{RP}, which results in \textit{N} partial bitstreams for \textit{N} desired \glspl{RP}.
 \cite{martins_dynamic_2018} improves the previous work in \cite{martins_tmr_2015} and demonstrates its functionality in a scenario where permanent faults due to ageing are detected and mitigated.
@@ -128,7 +128,7 @@ Usual \gls{DPR} workflows require a dedicated partial bitstream for each \gls{RP
 If a more complex or diverse set of tasks needs to be processed, a task based architecture may be used. 
 This usually includes the usage of some kind of \gls{RTOS} with a scheduler.
 The scheduler is extended with a placer component which computes the optimal location of a hardware accelerated task in the \gls{RP}.
-To make a heterogeneous set of tasks possible, all tasks can share the same memory interface and interact with the \gls{RTOS} over this shared memory, as shown in \cite{wang_dynamic_2018} (see also figure \ref{fig:TaskBased}).
+To make a heterogeneous set of tasks possible, all tasks can share the same memory interface and interact with the \gls{RTOS} over this shared memory, as shown in \cite{wang_dynamic_2018} (see also Figure \ref{fig:TaskBased}).
 \cite{wang_dynamic_2018} implements their work on the Zynq \gls{SoC} by Xilinx, which means that the following concepts may be specific to this platform and vendor. 
 To achieve the placement of a partial bitstream (the task) to any location within the \gls{RP}, the used \gls{ICAP} controller needs to support the modification of the \gls{FAR}, which is part of the structure of each bitstream.
 The \gls{FAR} determines the physical location of the module on the \gls{FPGA}.
@@ -141,7 +141,7 @@ The placement module is responsible for the determination of a suitable location
 To achieve this, the \gls{RP} is split into squares of equal size as the smallest possible granularity of logic that may be available to a task.
 Hardware tasks contain information about their required width ($T_w$) and height ($T_h$) in relation to the created grid. 
 They also contain information about their task arrival time ($T_a$), execution time ($T_e$) and deadline ($T_d$).
-Equation \ref{equ:HardwareTask} shows a compact representation of such a hardware task while figure \ref{fig:TaskGrid} shows the subdivided \gls{RP} where the two tasks \textit{T1} and \textit{T2} are already placed and executed.
+Equation \ref{equ:HardwareTask} shows a compact representation of such a hardware task while Figure \ref{fig:TaskGrid} shows the subdivided \gls{RP} where the two tasks \textit{T1} and \textit{T2} are already placed and executed.
 \begin{equation}\label{equ:HardwareTask}
     HT(T_w, T_h, T_a, T_e, T_d)
 \end{equation}
@@ -183,12 +183,12 @@ When a fault is detected in a \gls{RP}, a reconfiguration to another \gls{RP} is
 If no spare \glspl{RP} are available (i.e. all resources are in usage), it may still be possible to reduce another tasks resource consumption while it stills keeps up the required functionality and meets its deadline.
 For this purpose, the task with the lowest priority is examined.
 If there is a configuration that fulfils the necessary requirements, the task is reconfigured to this degraded form and the faulty task is moved to the now free spare slot.
-Should the lowest priority task already be reduced to its most economical form (in regard to consumed area), the process is repeated with the next higher priority task. 
+Should the lowest priority task already be reduced to its most economical form (in regard to the consumed area), the process is repeated with the next higher priority task. 
 When the list of possible tasks is exhausted, i.e. the task with the highest priority is reached and no sufficient area could be claimed, another solution needs to be found. 
 In this case, the list of tasks is traversed again from the bottom up. 
 This time, each task is checked for a protection flag, the \gls{EC}. 
 If this flag is set to 0, the task is eliminated and the faulty task is instantiated in the created spare space.
-After a successful mitigation the faulty area is checked for transient and permanent faults. 
+After successful mitigation, the faulty area is checked for transient and permanent faults. 
 In the case of a transient fault, the original configuration is restored after the faulty tile is recovered. 
 For permanent faults, the new configuration is kept, and the faulty tile is removed from future evaluation processes. 
  

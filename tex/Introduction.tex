@@ -1,17 +1,17 @@
 %\tableofcontents
 
 \section{Introduction}\label{Introduction}
-\glspl{FPGA} provide us with flexible options to reconfigure functionality at runtime. 
+\glspl{FPGA} provide us with flexible options to reconfigure functionality at run-time. 
 This flexibility can be exploited to increase fault resistance which in turn reduces the need for hardware redundancy. 
 
 \gls{DPR} for fault mitigation can be split into two major fields of appliances. 
 The first field discusses the mitigation of faults that occur within the \gls{FPGA}.
 These faults interfere with the intended functionality of the tasks executed on the \gls{FPGA} itself, e.g. permanent and transient faults. 
-The second area focuses on the mitigation of faults that are present in external devices by the provision of redundancy in form of the \gls{FPGA}.
-In the following, this work will refer to these two types of faults as \textit{internal} and \textit{external} faults respectively.
+The second area focuses on the mitigation of faults that are present in external devices by the provision of redundancy in the form of the \gls{FPGA}.
+In the following, this work will refer to these two types of faults as \textit{internal} and \textit{external} faults, respectively.
 
 The rest of this work is organized as follows.
 Section \ref{InternalFaults} introduces different causes of faults within the \gls{FPGA} and shows strategies to maintain the desired behaviour.
-Actions to increase security and resilience \glspl{NoC} are presented in section \ref{sec:NoC}.
+Actions to increase security and resilience \glspl{NoC} are presented in Section \ref{sec:NoC}.
 Section \ref{ExternalFaults} describes scenarios where external faults may happen and how they can be mitigated with the usage of minimal hardware resources. 
 Section \ref{Conclusion} gives concluding remarks on the surveyed applications and an estimate on future developments.
