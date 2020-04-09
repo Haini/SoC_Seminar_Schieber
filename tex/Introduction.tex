@@ -11,7 +11,10 @@ The second area focuses on the mitigation of faults that are present in external
 In the following, this work will refer to these two types of faults as \textit{internal} and \textit{external} faults, respectively.
 
 The rest of this work is organized as follows.
-Section \ref{InternalFaults} introduces different causes of faults within the \gls{FPGA} and shows strategies to maintain the desired behaviour.
-Actions to increase security and resilience \glspl{NoC} are presented in Section \ref{sec:NoC}.
+Section \ref{InternalFaults} introduces different types of internal faults and a generally applicable fault mitigation flow in the conctext of \gls{DPR}.
+After this, different architectures and strategies for fault mitigation with \gls{DPR} are introduced in Section \ref{InternalFaultsArch}.
+This involves architectures that focus solely on the aspect of moving functionality from faulty to healthy tiles as well as solutions like \glspl{NoC}, that come with built in fault tolerance. 
+For \glspl{NoC}, first we cover a security relevant scenario where faults are introduced with malicious intent by a third party through partial reconfiguration of a modified \glspl{IP}.
+Second, we show how \glspl{NoC} can deal with internal faults that affect routing within the network.  
 Section \ref{ExternalFaults} describes scenarios where external faults may happen and how they can be mitigated with the usage of minimal hardware resources. 
 Section \ref{Conclusion} gives concluding remarks on the surveyed applications and an estimate on future developments.
