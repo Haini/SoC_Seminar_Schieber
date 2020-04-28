@@ -14,8 +14,10 @@
 \usepackage[nomessages]{fp}
 \usepackage{ltxtable}
 \usepackage{booktabs}
+
     
 \usepackage[T1]{fontenc} % optional
+\usepackage[utf8]{inputenc}
 %\usepackage[cmintegrals]{newtxmath} buggy
 \usepackage{txfonts}
 \usepackage{bm} % optional
@@ -29,6 +31,8 @@
  {\if a#1A\else \if b#1B\else \if c#1C\else \if d#1D\else
   \if e#1E\else \if f#1F\else #1\fi\fi\fi\fi\fi\fi \@hex@Hex}
 \makeatother
+
+\DeclareUnicodeCharacter{FB01}{\,} %TODO: INVESTIGATE, probably because of bib file
 
 %\makeatletter
 %\AtBeginDocument{%
