@@ -1,0 +1,19 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Abstract Fault Mitigation Flow	tex/InternalFaults.tex	/^The following subsection introduces the general concept of a fault mitigation- and recovery flow. $/;"	u
+Architectures for Internal Fault Mitigation	tex/InternalFaults.tex	/^The next sections introduce different architectures for a system utilising \\gls{DPR} for fault mitigation.$/;"	s
+Conclusion	tex/Conclusion.tex	/^\\section{Conclusion}\\label{Conclusion}$/;"	s
+Detect Fault	tex/InternalFaults.tex	/^As the general scheme for fault mitigation is always the same, a brief introduction to the cornerstones of every recovery flow is given (depicted in Figure \\ref{fig:internalFaultFlow}). $/;"	b
+Introduction	tex/Introduction.tex	/^%\\tableofcontents$/;"	s
+Mitigate Fault	tex/InternalFaults.tex	/^    This control-unit then gathers information about the location of the affected area and which functionality is corrupted.$/;"	b
+Recover Faulty Area	tex/InternalFaults.tex	/^    The now freshly instantiated module then needs to re-sync its state with the rest of the system to return to its normal functionality.$/;"	b
+Resume Functionality	tex/InternalFaults.tex	/^    As a consequence, the system can dynamically adapt its fault resistance to changing circumstances.$/;"	b
+Spare Tile Architecture for gls  DPR	tex/InternalFaults.tex	/^The following sections give an overview over existing solutions for fault mitigation with \\gls{DPR}. $/;"	u
+Types of Internal Faults	tex/InternalFaults.tex	/^The next subsection reviews the different types of faults and categorizes them. $/;"	u
+gls  DPR	tex/ExternalFaults.tex	/^The next section will describe the proposed concept by \\cite{crdl_fail-safe_2002} in more detail.$/;"	u
+gls  DPR	tex/ExternalFaults.tex	/^\\section{\\gls{DPR} for External Fault Mitigation}\\label{ExternalFaults}$/;"	s
+gls  DPR	tex/InternalFaults.tex	/^\\section{\\gls{DPR} for Internal Fault Mitigation}\\label{InternalFaults}$/;"	s
