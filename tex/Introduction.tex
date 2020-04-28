@@ -11,10 +11,31 @@ The second area focuses on the mitigation of faults that are present in external
 In the following, this work will refer to these two types of faults as \textit{internal} and \textit{external} faults, respectively.
 
 The rest of this work is organized as follows.
-Section \ref{InternalFaults} introduces different types of internal faults and a generally applicable fault mitigation flow in the conctext of \gls{DPR}.
+Section \ref{InternalFaults} introduces different types of internal faults and a generally applicable fault mitigation flow in the context of \gls{DPR}.
 After this, different architectures and strategies for fault mitigation with \gls{DPR} are introduced in Section \ref{InternalFaultsArch}.
 This involves architectures that focus solely on the aspect of moving functionality from faulty to healthy tiles as well as solutions like \glspl{NoC}, that come with built in fault tolerance. 
 For \glspl{NoC}, first we cover a security relevant scenario where faults are introduced with malicious intent by a third party through partial reconfiguration of a modified \glspl{IP}.
 Second, we show how \glspl{NoC} can deal with internal faults that affect routing within the network.  
 Section \ref{ExternalFaults} describes scenarios where external faults may happen and how they can be mitigated with the usage of minimal hardware resources. 
 Section \ref{Conclusion} gives concluding remarks on the surveyed applications and an estimate on future developments.
+
+\begin{table*}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llccc}
+        \toprule
+       \textbf{Authors} & \textbf{Mitigation Method} & \textbf{Fault Detection Method} & \textbf{Novelty} & \textbf{Overhead} \\
+       \midrule
+       \cite{bolchini_tmr_2007} Bolchini et al. 2007        & Spare Tile Architecture      & TMR & \\
+       \cite{lameres_radsat_2015} LaMeres et al. 2015       & Spare Tile Architecture      & TMR & \\
+       \cite{wilson_hybrid_2017} Wilson et al. 2017         & Spare Tile Architecture      & TMR & \\
+       \cite{martins_dynamic_2018} Martins et al. 2018      & Spare Tile Architecture      & TMR & \\
+       \cite{martins_tmr_2015} Martins et al. 2015          & Spare Tile Architecture      & TMR & \\
+       \cite{wang_dynamic_2018} Wang et al. 2018            & Task Based Architecture      & Scrubbing & \\
+       \cite{sharma_run-time_2018} Sharma et al. 2018       & Task Based Architecture      & - & \\
+       \cite{sharma_run-time_2018} Sharma et al. 2018       & Task Based Architecture      & - & \\
+       \cite{kadri_survey_2019} Kadri et al. 2019           & NoC                          & &\\
+       \cite{majer_packet_2005} Majer et al. 2005           & NoC                          & &\\
+       \cite{wehbe_secure_2016} Wehbe et al. 2016           & NoC                          & &\\
+       \cite{crdl_fail-safe_2002} Crdl et al. 2002          & External Redundancy           & &\\
+       \bottomrule
+    \end{tabular*}
+\end{table*}

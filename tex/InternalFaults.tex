@@ -55,7 +55,7 @@ To mitigate the aforementioned internal faults in a \gls{FPGA}, different strate
 All of them feature \gls{DPR} as a means to move functional blocks from a faulty silicon area to a healthy one.
 What sets them apart is the way of fault detection and the specifically employed \gls{DPR} strategy.
 
-The following section introduces the general concept of a fault mitigation- and recovery flow. 
+The following subsection introduces the general concept of a fault mitigation- and recovery flow. 
 
 \subsection{Abstract Fault Mitigation Flow}\label{AbstractFaultMitigationFlow}
 As the general scheme for fault mitigation is always the same, a brief introduction to the cornerstones of every recovery flow is given (depicted in Figure \ref{fig:internalFaultFlow}). 
@@ -88,15 +88,16 @@ As the general scheme for fault mitigation is always the same, a brief introduct
 \end{center}
 Each stage of this flow can be implemented with different architectural design choices.
 These choices are influenced by available resources, real-time constraints and the desire of more control over the system behaviour.
-The next sections introduce different architectures for a system that wants to utilize \gls{DPR} for fault mitigation.
+The next sections introduce different architectures for a system utilising \gls{DPR} for fault mitigation.
 
 \section{Architectures for Internal Fault Mitigation}\label{InternalFaultsArch}
 The following sections give an overview over existing solutions for fault mitigation with \gls{DPR}. 
 
 \subsection{Spare Tile Architecture for \gls{DPR}}\label{sec:SpareTileArchitecture}
 The basic concept of spare tile architectures is introduced in \cite{bolchini_tmr_2007}. 
-This approach is taken in the work of \cite{lameres_radsat_2015} and is extended in \cite{wilson_hybrid_2017}.
-It creates a computer system that exhibits a higher fault tolerance against radiation-induced faults while using only commercially available off-the-shelf \glspl{FPGA}. 
+This approach is employed in the work of \cite{lameres_radsat_2015} and is extended in \cite{wilson_hybrid_2017}.
+It creates a computer system that exhibits a higher fault tolerance against radiation-induced faults while using only commercially available off-the-shelf \glspl{FPGA}.
+The use of non-radiation hardened hardware and off-the-shelf availability reduce cost and weight at the expense of fault-tolerance, thus the need to compensate on an architectural level. 
 To achieve this, the computing system is designed as a \gls{PR} partition from the beginning (Figure \ref{fig:SpareTileArchitecture}). 
 \gls{TMR} with a voter is used to assess the correctness of the output. 
 When one module fails to compute the expected result (i.e. the result of the other two modules), a partial reconfiguration flow is triggered.
@@ -184,7 +185,7 @@ This flow allows the selection of a suitable combination of task modules based o
 \subsubsection{Fault mitigation scheme}
 The \textit{Explorer} also implements a fault mitigation flow.
 When a fault is detected in a \gls{RP}, a reconfiguration to another \gls{RP} is attempted as a first step.
-If no spare \glspl{RP} are available (i.e. all resources are in usage), it may still be possible to reduce another tasks resource consumption while it stills keeps up the required functionality and meets its deadline.
+If no spare partitions are available (i.e. all resources are in usage), it may still be possible to reduce another tasks resource consumption while it still keeps up the required functionality and meets its deadline.
 For this purpose, the task with the lowest priority is examined.
 If there is a configuration that fulfils the necessary requirements, the task is reconfigured to this degraded form and the faulty task is moved to the now free spare slot.
 Should the lowest priority task already be reduced to its most economical form (in regard to the consumed area), the process is repeated with the next higher priority task. 
@@ -233,7 +234,7 @@ For this, a close router $R_1$ is selected.
 The number of network interfaces on each router is constant, so another node $N_x$ needs to be unlinked from router $R_1$. 
 This node $N_x$ still needs to be connected to another router $R_n$ after being disconnected from $R_1$, i.e. it needs to remain in the network after the reconfiguration.
 
-Figure \ref{fig:nocSwap} shows a simplified version of the approach taken in \cite{wang_dynamic_2018}. 
+Figure \ref{fig:nocSwap} shows a simplified version of the approach taken in \cite{wehbe_secure_2016}. 
 Multiple nodes are connected to their respective routers over a \gls{RP}.
 It is assumed that \textit{Node 2} is connected to at least two routers, one of which is \textit{Router 2}.
 \textit{Node 1} is a corner node that has only a link to one router, namely \textit{Router 1}.
