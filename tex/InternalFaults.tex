@@ -142,9 +142,10 @@ The idea of re-configuring the connections between modules rather than the modul
 
 Fault detection with forward \gls{TR} is proposed in \cite{frenkel2015}.
 The advantage of such an approach in comparison to \gls{TMR} is a potentially lower resource overhead.
-With \gls{TMR} the whole resilient circuit needs to be replicated and a voter design needs to be added.
+With \gls{TMR} the whole resilient circuit needs to be triplicated and a voter design needs to be added.
 In comparison, with \gls{TR}, only sequential resources of a circuit need to be duplicated.
-Forward \gls{TR} reduces the delay introduced by \gls{TR} while still providing the same granularity for localizing faults. 
+The proposed forward \gls{TR} reduces the delay introduced by \gls{TR} which makes it suitable for designs that require a higher clock. 
+Fault mitigation is achieved by placing fault-tolerant modules in a \gls{PR} zone  
 
 \begin{center}
 \begin{figure}[h]
