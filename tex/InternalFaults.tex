@@ -94,8 +94,9 @@ The next sections introduce different architectures for a system utilising \gls{
 The following sections give an overview over existing solutions for fault mitigation with \gls{DPR}. 
 
 \subsection{Spare Tile Architecture for \gls{DPR}}\label{sec:SpareTileArchitecture}
-The basic concept of spare tile architectures is introduced in \cite{bolchini_tmr_2007}. 
-This approach is employed in the work of \cite{lameres_radsat_2015} and is extended in \cite{wilson_hybrid_2017}.
+The basic concept of spare tile architectures is introduced in \cite{bolchini2007}. 
+This approach is employed in the works of \cite{davis2014}, \cite{kastil2012}, \cite{zhang2013} and \cite{lameres_radsat_2015}. 
+It is extended in \cite{wilson_hybrid_2017}.
 It creates a computer system that exhibits a higher fault tolerance against radiation-induced faults while using only commercially available off-the-shelf \glspl{FPGA}.
 The use of non-radiation hardened hardware and off-the-shelf availability reduce cost and weight at the expense of fault-tolerance, thus the need to compensate on an architectural level. 
 To achieve this, the computing system is designed as a \gls{PR} partition from the beginning (Figure \ref{fig:SpareTileArchitecture}). 
@@ -115,10 +116,36 @@ But as the complexity of such a design increases, the tile size also increases.
 This implies an increased overall area cost for the spare tiles on the \gls{FPGA} which makes efficient placement more difficult.
 It also reduces the amount of available space for other desired functionalities. 
 
+
 The work of \cite{martins_tmr_2015} follows a similar principle but tries to optimize the tooling that is required for partial bitstream generation.
 The goal of these optimizations is to reduce the overall resource waste by the provision of only one partial bitstream per module for all \textit{N} \glspl{RP}. %The following part could still be extended with more details 
 Usual \gls{DPR} workflows require a dedicated partial bitstream for each \gls{RP}, which results in \textit{N} partial bitstreams for \textit{N} desired \glspl{RP}.
 \cite{martins_dynamic_2018} improves the previous work in \cite{martins_tmr_2015} and demonstrates its functionality in a scenario where permanent faults due to ageing are detected and mitigated.
+
+Another approach by \cite{kourfali2019} also provides an improved toolchain for the generation of resilient designs. 
+They utilize a virtual \gls{VCGRA} architecture and parametrized configuration \cite{heyse2013} to achieve a low resource overhead and mitigate \glspl{SEU} in off-the-shelf hardware.
+By the use of \glspl{VCGRA}, they introduce an additional abstraction layer for the hardware of the \gls{FPGA} which - in combination with paremterized configuration - allows them to generate bitstreams without the need to re-run the conventional bitstream compilation toolchain.
+A combination of fine grained \gls{TMR} for fault-detection and \textit{micro-scrubbing} is used to keep scrubbing times to a minimum. 
+Micro-scrubbing allows them to only scrub faulty areas of the \gls{FPGA} which reduces scrubbing times for one \gls{LUT} almost by the factor of four in comparison to conventional scrubbing.
+They also introduce a more light-weight and fault-tolerant reconfiguration controller with support for micro-scrubbing. 
+Note that this approach only handles \glspl{SEU} and not permanent faults (although it could be extended to do so).
+This work can't really be classified as a spare tile technique per se, but only as a scrubbing technique that could be easily extended to one that uses spare tiles. 
+
+Algorithm based fault tolerance is used in \cite{davis2014}.
+Based on the application, a model is developed to cross-verify the calculations of a linear algebra based module. 
+They demonstrate their approach based on matrix multiplications, where a checksum is generated as an additional row / column before calculation and which is then verified after it has been transformed by the multiplication.
+This removes the need for \gls{TMR} or similar techniques.
+Inputs and Outputs of the computing modules are placed in a partially reconfigurable area, so that any input and output can be connected to any computing module.  
+Should a fault be detected (i.e. calculated checksums fail the verification), a partial reconfiguration for re-routing of data in- and outputs is triggered in an attempt to avoid the faulty computing module. 
+This requires \textit{N+1} available computing modules, making this another example of a spare tile architecture.
+The idea of re-configuring the connections between modules rather than the modules itself is also employed in \glspl{NoC}.
+
+Fault detection with forward \gls{TR} is proposed in \cite{frenkel2015}.
+The advantage of such an approach in comparison to \gls{TMR} is a potentially lower resource overhead.
+With \gls{TMR} the whole resilient circuit needs to be replicated and a voter design needs to be added.
+In comparison, with \gls{TR}, only sequential resources of a circuit need to be duplicated.
+Forward \gls{TR} reduces the delay introduced by \gls{TR} while still providing the same granularity for localizing faults. 
+
 \begin{center}
 \begin{figure}[h]
     \centering
@@ -196,7 +223,6 @@ If this flag is set to 0, the task is eliminated and the faulty task is instanti
 After successful mitigation, the faulty area is checked for transient and permanent faults. 
 In the case of a transient fault, the original configuration is restored after the faulty tile is recovered. 
 For permanent faults, the new configuration is kept, and the faulty tile is removed from future evaluation processes. 
- 
 %\begin{figure}
 %    \centering
 %    %\includegraphics[width=\columnwidth]{}
