@@ -11,6 +11,7 @@ The second area focuses on the mitigation of faults that are present in external
 In the following, this work will refer to these two types of faults as \textit{internal} and \textit{external} faults, respectively.
 
 The rest of this work is organized as follows.
+A general overview over the existing literature and its main methodologies is given in \ref{sec:literatureOverview}.
 Section \ref{InternalFaults} introduces different types of internal faults and a generally applicable fault mitigation flow in the context of \gls{DPR}.
 After this, different architectures and strategies for fault mitigation with \gls{DPR} are introduced in Section \ref{InternalFaultsArch}.
 This involves architectures that focus solely on the aspect of moving functionality from faulty to healthy tiles as well as solutions like \glspl{NoC}, that come with built in fault tolerance. 
@@ -22,7 +23,7 @@ Section \ref{Conclusion} gives concluding remarks on the surveyed applications a
 \begin{table*}
     \caption{Literature on the usage of \gls{DPR} for fault-tolerance.}
     \label{tbl:literatureOverview}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llccc}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lll}
         \toprule
        \textbf{Authors} & \textbf{Fault Mitigation Method} & \textbf{Fault Detection Method} \\
        \midrule
@@ -37,16 +38,39 @@ Section \ref{Conclusion} gives concluding remarks on the surveyed applications a
        \cite{dicarlo2014} Dicarlo et al. 2014               & Spare Tile Architecture      & Error Signals, Tests \\
        \cite{wang_dynamic_2018} Wang et al. 2018            & Task Based Architecture      & Scrubbing \\
        \cite{sharma_run-time_2018} Sharma et al. 2018       & Task Based Architecture      & - \\
-       \cite{kadri_survey_2019} Kadri et al. 2019           & NoC                          & \\
-       \cite{majer_packet_2005} Majer et al. 2005           & NoC                          & \\
-       \cite{wehbe_secure_2016} Wehbe et al. 2016           & NoC                          & \\
+       \cite{kadri_survey_2019} Kadri et al. 2019           & NoC - Routing, Remapping, Redundancy                        & - \\
+       \cite{wehbe_secure_2016} Wehbe et al. 2016           & NoC - Routing               & Timeout\\
        \cite{kourfali2019} Kourfali et al. 2019             & Localized Scrubbing           & TMR \\
        \cite{frenkel2015} Frenkel et al. 2015               & Localized Scrubbing       & Forward Temporal Redundancy \\
-       \cite{alkady_integration_2016} Alkady et al. 2016             &              & TMR, Temporal Redundancy \\
+       \cite{alkady_integration_2016} Alkady et al. 2016    & \gls{DPR}             & TMR, Temporal Redundancy \\
        \cite{crdl_fail-safe_2002} Crdl et al. 2002          & External Redundancy           & Bus Monitoring, Watchdog \\
        \bottomrule
     \end{tabular*}
 \end{table*}
 
-Table \ref{tbl:literatureOverview} gives an overview over the existing literature and tries to classify the existing work by the used \textit{Fault Mitigation Method} and the \textit{Fault Detection Method}. 
+\section{Literature Overview}\label{sec:literatureOverview}
+Table \ref{tbl:literatureOverview} gives an overview over the existing literature and tries to classify the existing work by the used \textit{Fault Mitigation Method} and the \textit{Fault Detection Method}.
+One can see that the prevalent strategy for Fault Mitigation is the \textit{Spare Tile Architecture}. 
+This makes sense, as it is straight forward to implement with most of the standard vendor tool-chains.
+An architecture was classified as \textit{Spare Tile Architecture} if it was reserving extra space for potentially occurring faults, consequently moving a faulty module to the healthy extra space.
+Designs with this architecture mostly utilize \gls{TMR} as a \textit{Fault Detection Method} as it is easy and reliable to move a faulty module to the reserved space without compromising functionality.
+Furthermore, these solutions can handle transient and permanent faults equally well.
+The disadvantage of these methods in general is that they introduce an overhead in terms of used resources and storage for partial bitstreams.
+Solutions to this are introduced in Section \ref{sec:SpareTileArchitecture}. 
+They are also inflexible or at least not easy to generalize.
+
+A solution to this is introduced with the \textit{Task Based Architecture}.
+These architectures focus on a \gls{RTOS} based approach, where resilient modules are modelled as tasks that may be placed anywhere, anytime within the \gls{RP}. 
+The listed works don't focus on fault detection, as it should be managed on the level of the \gls{RTOS}.
+With a standardized communication interface and an OS-like scheduler, faults can be mitigated by re-scheduling modules to healthy tiles as needed. 
+This makes the approach much more general, albeit it may compromise hard real-time requirements.
+
+\glspl{NoC} already heave the inherent property of a standardized communication interface which may also be utilized to increase fault tolerance.
+Re-routing of data-paths to avoid faulty or malicious nodes proves to be a useful means for handling transient and permanent faults.
+
+Localized scrubbing is used to reduce scrubbing times, but requires the development of non-vendor tools and the modification of partial reconfiguration controllers.
+It profits from a finer grained localization of faults.
+While this approach reduces resource usage, it is not able to handle permanent faults. 
+
+
 %TODO Add what one can see from the table

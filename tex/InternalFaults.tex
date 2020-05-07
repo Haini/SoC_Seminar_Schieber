@@ -124,7 +124,7 @@ Usual \gls{DPR} workflows require a dedicated partial bitstream for each \gls{RP
 
 Another approach by \cite{kourfali2019} also provides an improved toolchain for the generation of resilient designs. 
 They utilize a virtual \gls{VCGRA} architecture and parametrized configuration \cite{heyse2013} to achieve a low resource overhead and mitigate \glspl{SEU} in off-the-shelf hardware.
-By the use of \glspl{VCGRA}, they introduce an additional abstraction layer for the hardware of the \gls{FPGA} which - in combination with paremterized configuration - allows them to generate bitstreams without the need to re-run the conventional bitstream compilation toolchain.
+By the use of \glspl{VCGRA}, they introduce an additional abstraction layer for the hardware of the \gls{FPGA} which - in combination with parametrized configuration - allows them to generate bitstreams without the need to re-run the conventional bitstream compilation toolchain.
 A combination of fine grained \gls{TMR} for fault-detection and \textit{micro-scrubbing} is used to keep scrubbing times to a minimum. 
 Micro-scrubbing allows them to only scrub faulty areas of the \gls{FPGA} which reduces scrubbing times for one \gls{LUT} almost by the factor of four in comparison to conventional scrubbing.
 They also introduce a more light-weight and fault-tolerant reconfiguration controller with support for micro-scrubbing. 
