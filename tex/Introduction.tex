@@ -20,7 +20,26 @@ Second, we show how \glspl{NoC} can deal with internal faults that affect routin
 Section \ref{ExternalFaults} describes scenarios where external faults may happen and how they can be mitigated with the usage of minimal hardware resources. 
 Section \ref{Conclusion} gives concluding remarks on the surveyed applications and an estimate on future developments.
 
+\section{Literature Overview}\label{sec:literatureOverview}
+Table \ref{tbl:literatureOverview} gives an overview over the existing literature and tries to classify the existing work by the used \textit{Fault Mitigation Method} and the \textit{Fault Detection Method}.
+One can see that the prevalent strategy for Fault Mitigation is the \textit{Spare Tile Architecture}. 
+This makes sense, as it is straight forward to implement with most of the standard vendor tool-chains.
+An architecture was classified as \textit{Spare Tile Architecture} if it was reserving extra space for potentially occurring faults, consequently moving a faulty module to the healthy extra space.
+Designs with this architecture mostly utilize \gls{TMR} as a \textit{Fault Detection Method} as it is easy and reliable to move a faulty module to the reserved space without compromising functionality.
+Furthermore, these solutions can handle transient and permanent faults equally well.
+The disadvantage of these methods in general is that they introduce an overhead in terms of used resources and storage for partial bitstreams.
+Solutions to this are introduced in Section \ref{sec:SpareTileArchitecture}. 
+They are also inflexible or at least not easy to generalize.
+
+A solution to this is introduced with the \textit{Task Based Architecture}.
+These architectures focus on a \gls{RTOS} based approach, where resilient modules are modelled as tasks that may be placed anywhere, anytime within the \gls{RP}. 
+The listed works don't focus on fault detection, as it should be managed on the level of the \gls{RTOS}.
+With a standardized communication interface and an OS-like scheduler, faults can be mitigated by re-scheduling modules to healthy tiles as needed. 
+This makes the approach much more general, albeit it may compromise hard real-time requirements.
+
+
 \begin{table*}
+    \centering
     \caption{Literature on the usage of \gls{DPR} for fault-tolerance.}
     \label{tbl:literatureOverview}
     \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lll}
@@ -49,24 +68,6 @@ Section \ref{Conclusion} gives concluding remarks on the surveyed applications a
        \bottomrule
     \end{tabular*}
 \end{table*}
-
-\section{Literature Overview}\label{sec:literatureOverview}
-Table \ref{tbl:literatureOverview} gives an overview over the existing literature and tries to classify the existing work by the used \textit{Fault Mitigation Method} and the \textit{Fault Detection Method}.
-One can see that the prevalent strategy for Fault Mitigation is the \textit{Spare Tile Architecture}. 
-This makes sense, as it is straight forward to implement with most of the standard vendor tool-chains.
-An architecture was classified as \textit{Spare Tile Architecture} if it was reserving extra space for potentially occurring faults, consequently moving a faulty module to the healthy extra space.
-Designs with this architecture mostly utilize \gls{TMR} as a \textit{Fault Detection Method} as it is easy and reliable to move a faulty module to the reserved space without compromising functionality.
-Furthermore, these solutions can handle transient and permanent faults equally well.
-The disadvantage of these methods in general is that they introduce an overhead in terms of used resources and storage for partial bitstreams.
-Solutions to this are introduced in Section \ref{sec:SpareTileArchitecture}. 
-They are also inflexible or at least not easy to generalize.
-
-A solution to this is introduced with the \textit{Task Based Architecture}.
-These architectures focus on a \gls{RTOS} based approach, where resilient modules are modelled as tasks that may be placed anywhere, anytime within the \gls{RP}. 
-The listed works don't focus on fault detection, as it should be managed on the level of the \gls{RTOS}.
-With a standardized communication interface and an OS-like scheduler, faults can be mitigated by re-scheduling modules to healthy tiles as needed. 
-This makes the approach much more general, albeit it may compromise hard real-time requirements.
-
 \glspl{NoC} already heave the inherent property of a standardized communication interface which may also be utilized to increase fault tolerance.
 Re-routing of data-paths to avoid faulty or malicious nodes proves to be a useful means for handling transient and permanent faults.
 
