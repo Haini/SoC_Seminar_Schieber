@@ -38,12 +38,6 @@ The listed works don't focus on fault detection, as it should be managed on the 
 With a standardized communication interface and an OS-like scheduler, faults can be mitigated by re-scheduling modules to healthy tiles as needed. 
 This makes the approach much more general, albeit it may compromise hard real-time requirements.
 
-\glspl{NoC} already heave the inherent property of a standardized communication interface which may also be utilized to increase fault tolerance.
-Re-routing of data-paths to avoid faulty or malicious nodes proves to be a useful means for handling transient and permanent faults.
-
-Localized scrubbing is used to reduce scrubbing times, but requires the development of non-vendor tools and the modification of partial reconfiguration controllers.
-It profits from a finer grained localization of faults.
-While this approach reduces resource usage, it is not able to handle permanent faults. 
 
 \begin{table*}
     \caption{Literature on the usage of \gls{DPR} for fault-tolerance.}
@@ -74,3 +68,10 @@ While this approach reduces resource usage, it is not able to handle permanent f
        \bottomrule
     \end{tabular*}
 \end{table*}
+
+\glspl{NoC} already heave the inherent property of a standardized communication interface which may also be utilized to increase fault tolerance.
+Re-routing of data-paths to avoid faulty or malicious nodes proves to be a useful means for handling transient and permanent faults.
+
+Localized scrubbing is used to reduce scrubbing times, but requires the development of non-vendor tools and the modification of partial reconfiguration controllers.
+It profits from a finer grained localization of faults.
+While this approach reduces resource usage, it is not able to handle permanent faults. 
