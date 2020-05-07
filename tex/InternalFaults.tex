@@ -145,7 +145,9 @@ The advantage of such an approach in comparison to \gls{TMR} is a potentially lo
 With \gls{TMR} the whole resilient circuit needs to be triplicated and a voter design needs to be added.
 In comparison, with \gls{TR}, only sequential resources of a circuit need to be duplicated.
 The proposed forward \gls{TR} reduces the delay introduced by \gls{TR} which makes it suitable for designs that require a higher clock. 
-Fault mitigation is achieved by placing fault-tolerant modules in a \gls{PR} zone  
+Fault mitigation is achieved by placing fault-tolerant modules in a \gls{PR} zone and a frame-based reconfiguration approach is used to reduce downtime.
+This approach does not tend to permanent faults as modules can't be moved to another location in the \gls{PR} zone. 
+While not qualifying as a architecture that uses a spare tile approach it could still be extended to one that uses it. 
 
 \begin{center}
 \begin{figure}[h]
