@@ -1509,6 +1509,18 @@ FUNCTION {format.journal}
   if$
 }
 
+%% journaltitle
+
+%FUNCTION {format.journaltitle}
+%{ journaltitle duplicate$ empty$ 'skip$
+%    { this.to.prev.status
+%      this.status.std
+%      cap.status.std
+%      select.language
+%      emphasize
+%    }
+%  if$
+%}
 
 
 %% how published
