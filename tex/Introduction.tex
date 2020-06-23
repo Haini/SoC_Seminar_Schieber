@@ -36,13 +36,14 @@ These architectures focus on a \gls{RTOS} based approach, where resilient module
 The listed works don't focus on fault detection, as it should be managed on the level of the \gls{RTOS}.
 With a standardized communication interface and an OS-like scheduler, faults can be mitigated by re-scheduling modules to healthy tiles as needed. 
 This makes the approach much more general, albeit it may compromise hard real-time requirements.
-
-
-\begin{table*}
+\begin{strip}
     \centering
-    \caption{Literature on the usage of \gls{DPR} for fault-tolerance.}
+    %\caption{Literature on the usage of \gls{DPR} for fault-tolerance.}
+    \captionof{table}{Literature on the usage of \gls{DPR} for fault-tolerance.}
     \label{tbl:literatureOverview}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lll}
+    %\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lll}
+    %\begin{tabular}{lll}
+    \centering \begin{tabularx}{\textwidth}{lll >{\arraybackslash}X}
         \toprule
        \textbf{Authors} & \textbf{Fault Mitigation Method} & \textbf{Fault Detection Method} \\
        \midrule
@@ -66,12 +67,10 @@ This makes the approach much more general, albeit it may compromise hard real-ti
        \cite{alkady_integration_2016} Alkady et al. 2016    & \gls{DPR}             & TMR, Temporal Redundancy \\
        \cite{crdl_fail-safe_2002} Crdl et al. 2002          & External Redundancy           & Bus Monitoring, Watchdog \\
        \bottomrule
-    \end{tabular*}
-\end{table*}
-%<<<<<<< HEAD
-%=======
-
-%>>>>>>> overleaf-2020-05-07-2041
+   \end{tabularx}
+    %\end{tabular}
+    %\end{tabular*}
+\end{strip}
 \glspl{NoC} already heave the inherent property of a standardized communication interface which may also be utilized to increase fault tolerance.
 Re-routing of data-paths to avoid faulty or malicious nodes proves to be a useful mean for handling transient and permanent faults.
 
