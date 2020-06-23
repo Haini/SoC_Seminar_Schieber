@@ -11,7 +11,7 @@ But this approach introduces new margin for error, as a two-pronged development 
 Another issue is real-time requirements that need to be fulfilled.
 A regular \gls{CPU} may not be able to provide concurrent computations or the required performance, as the emulated hardware (or software) may be too complex.
 
-A solution to these problems is the usage of \glspl{FPGA} as a means of redundancy. 
+A solution to these problems is the usage of \glspl{FPGA} as means of redundancy. 
 As the \gls{FPGA} can be reconfigured with different functionality during runtime, it reduces the total amount of hardware that is needed to achieve redundancy.
 Unlike \glspl{CPU}, \glspl{FPGA} provide better means for concurrent computation and are suitable to emulate multiple faulty hardware entities in a more appropriate manner. %TODO: Citation needed
 
@@ -32,7 +32,7 @@ Through this approach, each \gls{ECU} can be handled individually, and a higher 
 This is also done to save area on the \gls{FPGA} due to limited resources.
 When the watchdog registers a fault (i.e. the absence of datagrams from the \gls{ECU}), the backup circuit is instantiated in the same \gls{RP} as the watchdog and overrides its functionality.
 The faulty \gls{ECU} tries to shut down all of its communication on the bus and the instantiated backup circuit takes over.
-The consumers of the \gls{ECU} should not notice that the data is provided by another entity now.
+The user of the \gls{ECU} should not notice that the data is provided by another entity now.
 
 This concept was implemented and evaluated for the engine controller (fuel injection) and the transmission controller and was able to achieve the required real-time properties (with a reconfiguration time of 440$\mu$s) for minimal engine-performance.
 The usage of area and memory on the \gls{FPGA} is analysed thoroughly as both are scarce.

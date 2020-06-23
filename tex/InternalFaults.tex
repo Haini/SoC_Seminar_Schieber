@@ -11,7 +11,7 @@
 These properties prove useful for applications in the domain of aerospace and help to reduce the cost for satellites and spacecraft while providing high flexibility throughout the development process. 
 
 But \glspl{FPGA} are especially vulnerable to cosmic radiation which can create a multitude of internal errors in the \gls{FPGA} and thereby breaking its intended functionality \cite{ito_total_2015}.
-While there are radiation-hardened \glspl{FPGA} available on the market, the mass of a space embedded system is still composed of 80\% radiation shielding \cite{ito_total_2015}.
+While there are radiation-hardened \glspl{FPGA} available in the market, the mass of a space embedded system is still composed of 80\% radiation shielding \cite{ito_total_2015}.
 Yet, this shielding is still not able to provide sufficient protection from radiation-induced errors, especially on long-term missions. 
 Therefore, solutions for fault mitigation in aerospace \glspl{FPGA} need to be developed on the architectural level instead of the physical level. 
 This may also provide the advantage of lower requirements for radiation shielding and therefore a reduced cost for payload on rocket launches.
@@ -23,7 +23,7 @@ Recovery of the tile Recovery 1 (\textit{R1}) is attempted and if it fails, it i
 The next subsection reviews the different types of faults and categorizes them. 
 
 \subsection{Types of Internal Faults}
-There are different types of faults that may occur in the lifetime of a \gls{FPGA}, a short overview of the most relevant ones is given in the following.
+There are different types of faults that may occur in the lifetime of an \gls{FPGA}, a short overview of the most relevant ones is given in the following.
 \par
 \textbf{Transient Faults}
 \begin{itemize}
@@ -51,14 +51,14 @@ Based on this review, two main categories of errors emerge.
 First, \textit{permanent faults} (also known as \textit{hard errors}), which include all faults that render the affected area completely unusable. 
 Second, \textit{transient faults} (also known as \textit{soft errors}), which encompasses faults where the reclamation of the erroneous area may still be possible after the initial mitigation process.
 
-To mitigate the aforementioned internal faults in a \gls{FPGA}, different strategies can be employed.
-All of them feature \gls{DPR} as a means to move functional blocks from a faulty silicon area to a healthy one.
-What sets them apart is the way of fault detection and the specifically employed \gls{DPR} strategy.
+To mitigate the aforementioned internal faults in an \gls{FPGA}, different strategies can be employed.
+All of them feature \gls{DPR} as a mean to move functional blocks from a faulty silicon area to a healthy one.
+What sets them apart is the technique of fault detection and the specifically employed \gls{DPR} strategy.
 
 The following subsection introduces the general concept of a fault mitigation- and recovery flow. 
 
 \subsection{Abstract Fault Mitigation Flow}\label{AbstractFaultMitigationFlow}
-As the general scheme for fault mitigation is always the same, a brief introduction to the cornerstones of every recovery flow is given (depicted in Figure \ref{fig:internalFaultFlow}). 
+As the general scheme for fault mitigation is always the same, a brief introduction to the cornerstones of each step in the recovery flow is presented (depicted in Figure \ref{fig:internalFaultFlow}). 
 
 \subsubsection{Detect Fault}
     One key aspect of fault mitigation is fault detection. 
@@ -76,6 +76,10 @@ As the general scheme for fault mitigation is always the same, a brief introduct
 \subsubsection{Recover Faulty Area}
     If a transient fault is responsible for the erroneous behaviour, the affected chip area may be recovered by error correction techniques like scrubbing \cite{reorda_error-detection_2017}. 
     In case of a successful recovery, the control-unit can mark the partition as healthy and reuse it at a later point in time.
+    
+    Each stage of this flow can be implemented with different architectural design choices.
+These choices are influenced by available resources, real-time constraints and the desire of more control over the system behaviour.
+The next sections introduce different architectures for systems utilising \gls{DPR} for fault mitigation.
 \begin{center}
 \begin{figure}[h]
     \centering
@@ -86,10 +90,6 @@ As the general scheme for fault mitigation is always the same, a brief introduct
 \label{fig:internalFaultFlow}
 \end{figure}
 \end{center}
-Each stage of this flow can be implemented with different architectural design choices.
-These choices are influenced by available resources, real-time constraints and the desire of more control over the system behaviour.
-The next sections introduce different architectures for a system utilising \gls{DPR} for fault mitigation.
-
 \section{Architectures for Internal Fault Mitigation}\label{InternalFaultsArch}
 The following sections give an overview over existing solutions for fault mitigation with \gls{DPR}. 
 
@@ -101,10 +101,10 @@ It creates a computer system that exhibits a higher fault tolerance against radi
 The use of non-radiation hardened hardware and off-the-shelf availability reduce cost and weight at the expense of fault-tolerance, thus the need to compensate on an architectural level. 
 To achieve this, the computing system is designed as a \gls{PR} partition from the beginning (Figure \ref{fig:SpareTileArchitecture}). 
 \gls{TMR} with a voter is used to assess the correctness of the output. 
-When one module fails to compute the expected result (i.e. the result of the other two modules), a partial reconfiguration flow is triggered.
+When one module fails to compute the expected result (i.e. gives a different result from the other two modules), a partial reconfiguration flow is triggered.
 One of the healthy spare tiles is selected for the instantiation of another compute module.
 The usage of the scrubbing technique allows the eventual recovery of the faulty tile which decreases the likelihood of resource exhaustion. 
-Scrubbing is also used to check the health of inactive tiles in intervals so that the healthiness of the backup tiles is known at all time. 
+Scrubbing is also used to check the health of inactive tiles in intervals so that the healthiness of the backup tiles is known all the time. 
 An advantage of this approach is that all relevant computations can still be carried out by the two remaining healthy modules during the recovery process. 
 It also increases the robustness of the system in comparison to a stand-alone \gls{TMR} + scrubbing approach.
 The system has been verified theoretically by a Markov model, as well as in a real-world scenario where the test system was exposed to a defined dose of radiation over a time-period (The \gls{MTBF} was increased by a factor of 90 in this test).
@@ -123,13 +123,13 @@ Usual \gls{DPR} workflows require a dedicated partial bitstream for each \gls{RP
 \cite{martins_dynamic_2018} improves the previous work in \cite{martins_tmr_2015} and demonstrates its functionality in a scenario where permanent faults due to ageing are detected and mitigated.
 
 Another approach by \cite{kourfali2019} also provides an improved toolchain for the generation of resilient designs. 
-They utilize a virtual \gls{VCGRA} architecture and parametrized configuration \cite{heyse2013} to achieve a low resource overhead and mitigate \glspl{SEU} in off-the-shelf hardware.
+They utilize a \gls{VCGRA} architecture and parametrized configuration \cite{heyse2013} to achieve a low resource overhead and mitigate \glspl{SEU} in off-the-shelf hardware.
 By the use of \glspl{VCGRA}, they introduce an additional abstraction layer for the hardware of the \gls{FPGA} which - in combination with parametrized configuration - allows them to generate bitstreams without the need to re-run the conventional bitstream compilation toolchain.
 A combination of fine grained \gls{TMR} for fault-detection and \textit{micro-scrubbing} is used to keep scrubbing times to a minimum. 
 Micro-scrubbing allows them to only scrub faulty areas of the \gls{FPGA} which reduces scrubbing times for one \gls{LUT} almost by the factor of four in comparison to conventional scrubbing.
 They also introduce a more light-weight and fault-tolerant reconfiguration controller with support for micro-scrubbing. 
 Note that this approach only handles \glspl{SEU} and not permanent faults (although it could be extended to do so).
-This work can't really be classified as a spare tile technique per se, but only as a scrubbing technique that could be easily extended to one that uses spare tiles. 
+This work can't really be classified as a spare tile technique, but only as a scrubbing technique that could be easily extended to one that uses spare tiles. 
 
 Algorithm based fault tolerance is used in \cite{davis2014}.
 Based on the application, a model is developed to cross-verify the calculations of a linear algebra based module. 
@@ -188,8 +188,8 @@ Equation \ref{equ:HardwareTask} shows a compact representation of such a hardwar
     }
     \caption{The \gls{RP} is split into a grid to allow the mapping of tasks based on their resource usage}\label{fig:TaskGrid}
 \end{figure}
-\subsubsection{Fault mitigation scheme}
-To mitigate transient and permanent faults, that occur in the \gls{RP} of the \gls{FPGA}, the description of the hardware task is extended with the status of the resource.
+\emph{Fault mitigation scheme:}
+To mitigate transient and permanent faults, that occur in the \gls{RP} of the \gls{FPGA}, the description of the hardware task is extended with the status of the resources.
 If a fault is detected within a square of logic, a new damaged task \textit{D1} is created and bound to the faulty tile (Figure \ref{fig:TaskGridFault}).
 It gets the highest priority and the longest possible execution time assigned to prevent other tasks from being placed into the faulty area.
 Due to this, the placement algorithm does not need to be modified in any way, as the faulty tile is just treated as a busy task that is rescheduled as soon as it expires.
@@ -212,7 +212,8 @@ But as the amount of different implementations increases, it is getting more dif
 A bigger solution space is especially problematic on a system that already operates on constrained resources, as storage (for a pre-computed look-up table) as well as computational power (for a live exploration) are constrained. 
 Therefore, the so called \textit{Explorer} flow is proposed.
 This flow allows the selection of a suitable combination of task modules based on the current requirements.
-\subsubsection{Fault mitigation scheme}
+
+\emph{Fault mitigation scheme:}
 The \textit{Explorer} also implements a fault mitigation flow.
 When a fault is detected in a \gls{RP}, a reconfiguration to another \gls{RP} is attempted as a first step.
 If no spare partitions are available (i.e. all resources are in usage), it may still be possible to reduce another tasks resource consumption while it still keeps up the required functionality and meets its deadline.
