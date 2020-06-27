@@ -95,7 +95,7 @@ The following sections give an overview over existing solutions for fault mitiga
 
 \subsection{Spare Tile Architecture for \gls{DPR}}\label{sec:SpareTileArchitecture}
 The basic concept of spare tile architectures is introduced in \cite{bolchini2007}. 
-This approach is employed in the works of \cite{davis2014}, \cite{kastil2012}, \cite{zhang2013} and \cite{lameres_radsat_2015}. 
+This approach is employed in the works of \cite{davis2014}, \cite{kastil2012}, \cite{zhang2013} and \cite{lameres2015}. 
 It is extended in \cite{wilson_hybrid_2017}.
 It creates a computer system that exhibits a higher fault tolerance against radiation-induced faults while using only commercially available off-the-shelf \glspl{FPGA}.
 The use of non-radiation hardened hardware and off-the-shelf availability reduce cost and weight at the expense of fault-tolerance, thus the need to compensate on an architectural level. 
@@ -204,7 +204,7 @@ An extension to this would be a new constraint that requires other tasks to be p
 \end{figure}
  
 \subsection{Task Based Architecture for \gls{DPR} by Sharma et al.}\label{sec:TaskBasedArchitectureSharma}
-The work in \cite{sharma_run-time_2018} proposes a similar architecture to \cite{wang_dynamic_2018} but puts a bigger focus on making adaptions to changes in the available power budget.
+The work in \cite{sharma2018} proposes a similar architecture to \cite{wang_dynamic_2018} but puts a bigger focus on making adaptions to changes in the available power budget.
 That means that \gls{DPR} is utilized to achieve \gls{RT-SA}, i.e. a system that can dynamically alter its architecture to mitigate the effects of changed circumstances.
 To achieve this goal, different implementations of the same algorithm need to be provided.
 These implementations can differ in the used hardware resources (e.g. area, specific components, routing) to accommodate for different situations.
